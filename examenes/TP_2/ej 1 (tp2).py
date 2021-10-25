@@ -72,8 +72,41 @@ porc_pres_comuna_fit = porcentaje_comuna(porc_pres_circuito_fit)
 porc_pres_comuna_fit
 
 #%%
+# Resultados totales en cada mesa solo para Diputado Nacional
+resultCABA_dip_total = resultCABA[resultCABA["NOMBRE_CATEGORIA"] == "Diputados Nacionales Ciudad Autónoma de Buenos Aires"]
+resultCABA_dip_total.reset_index(inplace=True)
+
+#%%
+# Resultados del FIT en cada mesa solo para Presidente
+resultCABA_dip_fit = resultCABA[(resultCABA["NOMBRE_CATEGORIA"] == "Diputados Nacionales Ciudad Autónoma de Buenos Aires") & (resultCABA["NOMBRE_AGRUPACION"] == "FRENTE DE IZQUIERDA Y DE TRABAJADORES - UNIDAD")]
+resultCABA_dip_fit.reset_index(inplace=True)
+ 
+#%%
+# Porcentaje de Diputados Nacionales del FIT por circuito
+porc_dip_circ_fit = porcentaje_circuito(resultCABA_dip_total, resultCABA_dip_fit)
+porc_dip_circ_fit
+
+#%%
+# Porcentaje de Diputados Nacionales del FIT por comuna
+porc_dip_comuna_fit = porcentaje_comuna(porc_dip_circ_fit)
+porc_dip_comuna_fit
+
+#%%
+# Renombro columnas para que sea más legible la tabla que compara resultados legislativos con presidenciales
+porc_pres_comuna_fit = porc_pres_comuna_fit.rename(columns={"VOTOS_TOTALES": "VOTOS_TOTALES_PRES", "VOTOS_AGRUPACION": "VOTOS_FIT_PRES", "PORCENTAJE_AGRUPACION": "PORCENTAJE_FIT_PRES"})
+porc_dip_comuna_fit = porc_dip_comuna_fit.rename(columns={"VOTOS_TOTALES": "VOTOS_TOTALES_DIP", "VOTOS_AGRUPACION": "VOTOS_FIT_DIP", "PORCENTAJE_AGRUPACION": "PORCENTAJE_FIT_DIP"})
+
+#%%
+# Merge de ambas tablas
+comparacion_fit_pres_dip = pd.merge(porc_pres_comuna_fit, porc_dip_comuna_fit, left_index=True, right_index=True)
+comparacion_fit_pres_dip
+
+#%%
+# Porcentaje de Corte de Boleta entre Diputados Nacionales y Presidente
+comparacion_fit_pres_dip["DIFERENCIA_DIP_PRES"] = (comparacion_fit_pres_dip["PORCENTAJE_FIT_DIP"] - comparacion_fit_pres_dip["PORCENTAJE_FIR_PRES"])
+comparacion_fit_pres_dip.sort_values(by=["DIFERENCIA_DIP_PRES"], ascending=False) 
+#%%
 # Pendiente: 
 # - Ver como georeferenciar las tablas (quiza hacer un mapa)
 # - Hacer algunos graficos copados
-# - Comparar con el voto legislativo
 # - Comparar el voto legislativo con el voto en blanco en presidente

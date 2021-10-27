@@ -76,11 +76,16 @@ porc_pres_comuna_fit
 resultCABA_dip_total = resultCABA[resultCABA["NOMBRE_CATEGORIA"] == "Diputados Nacionales Ciudad Autónoma de Buenos Aires"]
 resultCABA_dip_total.reset_index(inplace=True)
 
+
+#%% [markdown]
+### Comparación de los resultados del FIT para categorías Diputados Nacionales y Presidente.
+#### La idea es que la diferencia entre ambos porcentajes va a dar una idea del corte de boleta
+
 #%%
 # Resultados del FIT en cada mesa solo para Presidente
 resultCABA_dip_fit = resultCABA[(resultCABA["NOMBRE_CATEGORIA"] == "Diputados Nacionales Ciudad Autónoma de Buenos Aires") & (resultCABA["NOMBRE_AGRUPACION"] == "FRENTE DE IZQUIERDA Y DE TRABAJADORES - UNIDAD")]
 resultCABA_dip_fit.reset_index(inplace=True)
- 
+
 #%%
 # Porcentaje de Diputados Nacionales del FIT por circuito
 porc_dip_circ_fit = porcentaje_circuito(resultCABA_dip_total, resultCABA_dip_fit)
@@ -103,8 +108,38 @@ comparacion_fit_pres_dip
 
 #%%
 # Porcentaje de Corte de Boleta entre Diputados Nacionales y Presidente
-comparacion_fit_pres_dip["DIFERENCIA_DIP_PRES"] = (comparacion_fit_pres_dip["PORCENTAJE_FIT_DIP"] - comparacion_fit_pres_dip["PORCENTAJE_FIR_PRES"])
+comparacion_fit_pres_dip["DIFERENCIA_DIP_PRES"] = (comparacion_fit_pres_dip["PORCENTAJE_FIT_DIP"] - comparacion_fit_pres_dip["PORCENTAJE_FIT_PRES"])
 comparacion_fit_pres_dip.sort_values(by=["DIFERENCIA_DIP_PRES"], ascending=False) 
+
+#%% [markdown]
+### Comparación con el voto en blanco en la categorías presidente
+
+#%%
+# Armo el DF con votos en blanco para presidente
+resultCABA_pres_blanco = resultCABA[(resultCABA["NOMBRE_CATEGORIA"] == "Presidente y Vicepresidente de la República") & (resultCABA["NOMBRE_AGRUPACION"] == "BLANCO")]
+resultCABA_pres_blanco.reset_index(inplace=True)
+
+#%%
+# FUnción para obtener el porcentaje por circuito
+porc_pres_circuito_blanco = porcentaje_circuito(resultCABA_pres_total, resultCABA_pres_blanco)
+porc_pres_circuito_blanco
+#%%
+# Función para obtener porcentaje por Comuna
+porc_pres_comuna_blanco = porcentaje_comuna(porc_pres_circuito_blanco)
+porc_pres_comuna_blanco
+
+#%%
+# Cambo los nombres para hacer más legible
+porc_pres_comuna_blanco = porc_pres_comuna_blanco.rename(columns={"VOTOS_TOTALES": "VOTOS_TOTALES_PRES", "VOTOS_AGRUPACION": "VOTOS_BLANCO_PRES", "PORCENTAJE_AGRUPACION": "PORCENTAJE_BLANCO_PRES"})
+porc_pres_comuna_blanco
+
+#%%
+# Esta es la comparación entre voto en blanco para presidente y voto para el FIT en diputados. 
+# Como comparación es menos útil que la anterior, no tengo como saber qué porcentaje del voto en blanco fue al FIT en diputados
+# Por lo que no sé cuanto valdría la pena ir a buscar al voto
+# Pero teniendo en cuenta la postura del FIT de en ballotage llamar al voto en blanco, puede llegar a ser un número interesante de votos para buscar
+comparacion_blanco_pres_fit_dip = pd.merge(porc_pres_comuna_blanco, porc_dip_comuna_fit, left_index=True, right_index=True)
+comparacion_blanco_pres_fit_dip
 #%%
 # Pendiente: 
 # - Ver como georeferenciar las tablas (quiza hacer un mapa)

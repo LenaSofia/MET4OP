@@ -5,7 +5,6 @@ import pandas as pd
 resultCABA = pd.read_csv (                          # Resultados totales
     "datos_agrup.csv"
 )
-resultCABA.head()
 
 #%% [markdown]
 ### Funciones para armar tablas de porcentaje por circuito y por comuna
@@ -145,3 +144,6 @@ comparacion_blanco_pres_fit_dip
 # - Ver como georeferenciar las tablas (quiza hacer un mapa)
 # - Hacer algunos graficos copados
 # - Comparar el voto legislativo con el voto en blanco en presidente
+# Ver la cantidad de votos de cada partido por cada circuito electoral y sacar porcentajes sobre eso
+# Ver cuáles son los circuitos con porcentajes máximos y mínimos, y ver cuáles son las comunas con porcentajes máximos y mínimos
+# Ver como se calculas los circuitos y ver cuál tiene mayor densidad poblacional, para pensar cuáles serían más relevantes

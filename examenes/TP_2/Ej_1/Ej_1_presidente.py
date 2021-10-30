@@ -402,6 +402,48 @@ porc_pres_comuna_RECURRIDO.to_csv("data/presidente/RECURRIDO/pres_RECURRIDO_comu
 #%%
 
 
+# OTROS:
+
+'''otras_agrupaciones = ['MOVIMIENTO AL SOCIALISMO', 'FRENTE PATRIOTA', 'PARTIDO AUTONOMISTA',
+                      'MOVIMIENTO DE ACCION VECINAL', 'AUTODETERMINACION Y LIBERTAD', 'EL MOVIMIENTO',
+                      'MOVIMIENTO DE JUBILADOS Y JUVENTUD', 'DEMOCRATA CRISTIANO', 'FRENTE RENOVADOR AUTENTICO',
+                      'PARTIDO DIGNIDAD POPULAR']
+
+resultCABA_pres_OTROS = resultCABA[((resultCABA["NOMBRE_CATEGORIA"] == "Presidente y Vicepresidente de la República") &
+                                 (resultCABA["NOMBRE_AGRUPACION"] == "MOVIMIENTO AL SOCIALISMO")) or
+                                    ((resultCABA["NOMBRE_CATEGORIA"] == "Presidente y Vicepresidente de la República") &
+                                     (resultCABA["NOMBRE_AGRUPACION"] == 'FRENTE PATRIOTA'))]
+
+resultCABA_pres_OTROS.reset_index(inplace=True, drop=True)
+
+print(resultCABA_pres_OTROS)
+
+# Porcentaje del OTROS por circuito
+porc_pres_circuito_OTROS = porcentaje_circuito(resultCABA_pres_total, resultCABA_pres_OTROS)
+
+
+# Porcentaje del OTROS por comuna
+porc_pres_comuna_OTROS = porcentaje_comuna(porc_pres_circuito_OTROS)
+
+# Cambio de nombres OTROS circuito
+porc_pres_circuito_OTROS = porc_pres_circuito_OTROS.rename(columns={"VOTOS_TOTALES": "VOTOS_TOTALES_PRES",
+                                                          "VOTOS_AGRUPACION": "VOTOS_OTROS_PRES",
+                                                          "PORCENTAJE_AGRUPACION": "PORCENTAJE_OTROS_PRES"})
+
+# Cambio de nombres OTROS comuna
+porc_pres_circuito_OTROS = porc_pres_circuito_OTROS.rename(columns={"VOTOS_TOTALES": "VOTOS_TOTALES_PRES",
+                                                          "VOTOS_AGRUPACION": "VOTOS_OTROS_PRES",
+                                                          "PORCENTAJE_AGRUPACION": "PORCENTAJE_OTROS_PRES"})
+
+# Guardo OTROS circuito
+porc_pres_circuito_OTROS.to_csv("data/presidente/OTROS/pres_OTROS_circuito.csv", encoding="utf-8")
+
+# Guardo OTROS comuna
+porc_pres_comuna_OTROS.to_csv("data/presidente/OTROS/pres_OTROS_comuna.csv", encoding="utf-8")'''
+
+
+#%%
+
 # Porcentaje resultados presidenciales
 
 #porc_pres_circuito = pd.merge([porc_pres_circuito_FIT, porc_pres_circuito_CF, porc_pres_circuito_NULO,
@@ -409,6 +451,20 @@ porc_pres_comuna_RECURRIDO.to_csv("data/presidente/RECURRIDO/pres_RECURRIDO_comu
 #                                porc_pres_circuito_FDT, porc_pres_circuito_JXC, porc_pres_circuito_NOS,
 #                                porc_pres_circuito_ULD])
 
-#porc_pres_circuito = pd.merge(left=porc_pres_circuito_FIT, right=porc_pres_circuito_CF, left_on='porc_pres_circuito_FIT', right_on='porc_pres_circuito_CF')
+porc_pres_circuito = pd.merge(left=porc_pres_circuito_FIT, right=porc_pres_circuito_CF, left_index=True, right_index=True, suffixes=('', '_1'))
+porc_pres_circuito = pd.merge(left=porc_pres_circuito, right=porc_pres_circuito_FDT, left_index=True, right_index=True, suffixes=('', '_3'))
+porc_pres_circuito = pd.merge(left=porc_pres_circuito, right=porc_pres_circuito_JXC, left_index=True, right_index=True, suffixes=('', '_5'))
+porc_pres_circuito = pd.merge(left=porc_pres_circuito, right=porc_pres_circuito_NOS, left_index=True, right_index=True, suffixes=('', '_7'))
+porc_pres_circuito = pd.merge(left=porc_pres_circuito, right=porc_pres_circuito_ULD, left_index=True, right_index=True, suffixes=('', '_9'))
+porc_pres_circuito = pd.merge(left=porc_pres_circuito, right=porc_pres_circuito_NULO, left_index=True, right_index=True, suffixes=('', '_11'))
+porc_pres_circuito = pd.merge(left=porc_pres_circuito, right=porc_pres_circuito_RECURRIDO, left_index=True, right_index=True, suffixes=('', '_13'))
+porc_pres_circuito = pd.merge(left=porc_pres_circuito, right=porc_pres_circuito_IMPUGNADO, left_index=True, right_index=True, suffixes=('', '_15'))
+porc_pres_circuito = pd.merge(left=porc_pres_circuito, right=porc_pres_circuito_BLANCO, left_index=True, right_index=True, suffixes=('', '_17'))
 
-#porc_pres_circuito.to_csv("data/presidente/pres_circuito.csv", encoding="utf-8")
+# pd.drop(porc_pres_circuito["VOTOS_TOTALES_PRES_1"])
+
+porc_pres_circuito.drop(['VOTOS_TOTALES_PRES_1', 'VOTOS_TOTALES_PRES_3', 'VOTOS_TOTALES_PRES_5', 'VOTOS_TOTALES_PRES_7',
+                        'VOTOS_TOTALES_PRES_9', 'VOTOS_TOTALES_PRES_11', 'VOTOS_TOTALES_PRES_13',
+                         'VOTOS_TOTALES_PRES_15', 'VOTOS_TOTALES_PRES_17'], axis=1, inplace=True)
+
+porc_pres_circuito.to_csv("data/presidente/pres_circuito.csv", encoding="utf-8")

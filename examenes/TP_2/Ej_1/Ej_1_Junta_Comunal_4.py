@@ -427,7 +427,7 @@ porc_Com4_circuito_OTROS = pd.read_csv("data/comuna_4/Com4_circuito.csv")
 
 lista_restos = pd.Series()
 
-for n in range(0, 18):
+for n in range(0, 15):
     resto = porc_Com4_circuito_OTROS.iloc[n, 2] - (porc_Com4_circuito_OTROS.iloc[n, 3] +
                                                    porc_Com4_circuito_OTROS.iloc[n, 5] +
                                                    porc_Com4_circuito_OTROS.iloc[n, 7] +
@@ -445,7 +445,7 @@ porc_Com4_circuito_OTROS['VOTOS_OTROS_COM4'] = lista_restos
 porcentajes_OTROS = pd.Series()
 
 
-for n in range(0, 18):
+for n in range(0, 15):
     porcentaje = ((porc_Com4_circuito_OTROS.iloc[n, -1] / porc_Com4_circuito_OTROS.iloc[n, 2] * 100).round(2))
     porcentaje = pd.Series(porcentaje)
     porcentajes_OTROS = porcentajes_OTROS.append(porcentaje, ignore_index=True)

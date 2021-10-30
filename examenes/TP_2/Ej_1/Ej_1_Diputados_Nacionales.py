@@ -413,8 +413,6 @@ porc_DipNac_circuito = pd.merge(left=porc_DipNac_circuito, right=porc_DipNac_cir
 porc_DipNac_circuito = pd.merge(left=porc_DipNac_circuito, right=porc_DipNac_circuito_IMPUGNADO, left_index=True, right_index=True, suffixes=('', '_15'))
 porc_DipNac_circuito = pd.merge(left=porc_DipNac_circuito, right=porc_DipNac_circuito_BLANCO, left_index=True, right_index=True, suffixes=('', '_17'))
 
-
-
 porc_DipNac_circuito.drop(['VOTOS_TOTALES_DIPNAC_1', 'VOTOS_TOTALES_DIPNAC_3', 'VOTOS_TOTALES_DIPNAC_5',
                         'VOTOS_TOTALES_DIPNAC_9', 'VOTOS_TOTALES_DIPNAC_11', 'VOTOS_TOTALES_DIPNAC_13',
                          'VOTOS_TOTALES_DIPNAC_15', 'VOTOS_TOTALES_DIPNAC_17'], axis=1, inplace=True)
@@ -458,7 +456,9 @@ porc_DipNac_circuito_OTROS['PORCENTAJE_OTROS_DIPNAC'] = porcentajes_OTROS
 
 porc_DipNac_circuito_OTROS.index = porc_DipNac_circuito_OTROS['NOMBRE_REGION']
 
-porc_DipNac_circuito_OTROS.to_csv("data/diputados_nacionales/DipNac_circuito_OTROS.csv", encoding="utf-8")
+porc_DipNac_circuito_OTROS.drop(["NOMBRE_REGION"], axis=1, inplace=True)
+
+porc_DipNac_circuito_OTROS.to_csv("data/diputados_nacionales/DipNac_circuito_completo.csv", encoding="utf-8")
 
 
 
@@ -466,20 +466,19 @@ porc_DipNac_circuito_OTROS.to_csv("data/diputados_nacionales/DipNac_circuito_OTR
 
 
 
-# DataFrame con porcentaje resultados diputados nacionales completo
+# DataFrame con porcentaje resultados diputados nacionales completo, por comuna
 
 
 porc_DipNac_comuna = pd.merge(left=porc_DipNac_comuna_FIT, right=porc_DipNac_comuna_CF, left_index=True, right_index=True, suffixes=('', '_1'))
 porc_DipNac_comuna = pd.merge(left=porc_DipNac_comuna, right=porc_DipNac_comuna_FDT, left_index=True, right_index=True, suffixes=('', '_3'))
 porc_DipNac_comuna = pd.merge(left=porc_DipNac_comuna, right=porc_DipNac_comuna_JXC, left_index=True, right_index=True, suffixes=('', '_5'))
-porc_DipNac_comuna = pd.merge(left=porc_DipNac_comuna, right=porc_DipNac_comuna_NOS, left_index=True, right_index=True, suffixes=('', '_7'))
 porc_DipNac_comuna = pd.merge(left=porc_DipNac_comuna, right=porc_DipNac_comuna_ULD, left_index=True, right_index=True, suffixes=('', '_9'))
 porc_DipNac_comuna = pd.merge(left=porc_DipNac_comuna, right=porc_DipNac_comuna_NULO, left_index=True, right_index=True, suffixes=('', '_11'))
 porc_DipNac_comuna = pd.merge(left=porc_DipNac_comuna, right=porc_DipNac_comuna_RECURRIDO, left_index=True, right_index=True, suffixes=('', '_13'))
 porc_DipNac_comuna = pd.merge(left=porc_DipNac_comuna, right=porc_DipNac_comuna_IMPUGNADO, left_index=True, right_index=True, suffixes=('', '_15'))
 porc_DipNac_comuna = pd.merge(left=porc_DipNac_comuna, right=porc_DipNac_comuna_BLANCO, left_index=True, right_index=True, suffixes=('', '_17'))
 
-porc_DipNac_comuna.drop(['VOTOS_TOTALES_DIPNAC_1', 'VOTOS_TOTALES_DIPNAC_3', 'VOTOS_TOTALES_DIPNAC_5', 'VOTOS_TOTALES_DIPNAC_7',
+porc_DipNac_comuna.drop(['VOTOS_TOTALES_DIPNAC_1', 'VOTOS_TOTALES_DIPNAC_3', 'VOTOS_TOTALES_DIPNAC_5',
                         'VOTOS_TOTALES_DIPNAC_9', 'VOTOS_TOTALES_DIPNAC_11', 'VOTOS_TOTALES_DIPNAC_13',
                          'VOTOS_TOTALES_DIPNAC_15', 'VOTOS_TOTALES_DIPNAC_17'], axis=1, inplace=True)
 
@@ -488,7 +487,7 @@ porc_DipNac_comuna.to_csv("data/diputados_nacionales/DipNac_comuna.csv", encodin
 
 #%%
 
-# Le agrego una columna al df con el porcentaje de voto de otras agrupaciones
+# Le agrego una columna al df con el porcentaje de voto de otras agrupaciones por comuna
 
 porc_DipNac_comuna_OTROS = pd.read_csv("data/diputados_nacionales/DipNac_comuna.csv")
 
@@ -503,8 +502,7 @@ for n in range(0, 15):
                                                    porc_DipNac_comuna_OTROS.iloc[n, 12] +
                                                    porc_DipNac_comuna_OTROS.iloc[n, 14] +
                                                    porc_DipNac_comuna_OTROS.iloc[n, 16] +
-                                                   porc_DipNac_comuna_OTROS.iloc[n, 18] +
-                                                   porc_DipNac_comuna_OTROS.iloc[n, 20])
+                                                   porc_DipNac_comuna_OTROS.iloc[n, 18])
     resto_comuna = pd.Series(resto_comuna)
     lista_restos_comuna = lista_restos_comuna.append(resto_comuna, ignore_index=True)
 
@@ -522,4 +520,69 @@ for n in range(0, 15):
 porc_DipNac_comuna_OTROS['PORCENTAJE_OTROS_DIPNAC'] = porcentajes_OTROS_comuna
 
 porc_DipNac_comuna_OTROS.index = porc_DipNac_comuna_OTROS['NOMBRE_REGION']
-porc_DipNac_comuna_OTROS.to_csv("data/diputados_nacionales/DipNac_comuna_OTROS.csv", encoding="utf-8")
+porc_DipNac_comuna_OTROS.drop(["NOMBRE_REGION"], axis=1, inplace=True)
+porc_DipNac_comuna_OTROS.to_csv("data/diputados_nacionales/DipNac_comuna_completo.csv", encoding="utf-8")
+
+
+#%%
+
+
+# Distribución total (sin porcentajes)
+# Circuitos
+
+distrib_DipNac_circuito = porc_DipNac_circuito_OTROS.drop(["PORCENTAJE_FIT_DIPNAC", "PORCENTAJE_CF_DIPNAC",
+                                                       "PORCENTAJE_FDT_DIPNAC", "PORCENTAJE_JXC_DIPNAC",
+                                                           "PORCENTAJE_ULD_DIPNAC",
+                                                        "PORCENTAJE_NULO_DIPNAC", "PORCENTAJE_RECURRIDO_DIPNAC",
+                                                       "PORCENTAJE_IMPUGNADO_DIPNAC", "PORCENTAJE_BLANCO_DIPNAC",
+                                                       "PORCENTAJE_OTROS_DIPNAC"
+                                                       ], axis=1, inplace=False)
+
+distrib_DipNac_circuito.to_csv("data/diputados_nacionales/distrib_DipNac_circuito.csv", encoding="utf-8")
+
+
+
+# Distribución total (sin porcentajes)
+# Comunas
+
+distrib_DipNac_comuna = porc_DipNac_comuna_OTROS.drop(["PORCENTAJE_FIT_DIPNAC", "PORCENTAJE_CF_DIPNAC",
+                                                       "PORCENTAJE_FDT_DIPNAC", "PORCENTAJE_JXC_DIPNAC",
+                                                       "PORCENTAJE_ULD_DIPNAC",
+                                                        "PORCENTAJE_NULO_DIPNAC", "PORCENTAJE_RECURRIDO_DIPNAC",
+                                                       "PORCENTAJE_IMPUGNADO_DIPNAC", "PORCENTAJE_BLANCO_DIPNAC",
+                                                       "PORCENTAJE_OTROS_DIPNAC"
+                                                   ], axis=1, inplace=False)
+
+distrib_DipNac_comuna.to_csv("data/diputados_nacionales/distrib_DipNac_comuna.csv", encoding="utf-8")
+
+
+# Distribución de porcentajes
+# Circuito
+
+porcentajes_DipNac_circuito = porc_DipNac_circuito_OTROS.drop(["VOTOS_FIT_DIPNAC","VOTOS_CF_DIPNAC","VOTOS_FDT_DIPNAC",
+                                                       "VOTOS_JXC_DIPNAC", "VOTOS_ULD_DIPNAC",
+                                                       "VOTOS_NULO_DIPNAC","VOTOS_RECURRIDO_DIPNAC",
+                                                       "VOTOS_IMPUGNADO_DIPNAC","VOTOS_BLANCO_DIPNAC",
+                                                       "VOTOS_OTROS_DIPNAC"
+                                                           ], axis=1, inplace=False)
+
+for x in range(0, 166):
+    porcentajes_DipNac_circuito.iloc[x, 1] = 100
+
+porcentajes_DipNac_circuito.to_csv("data/diputados_nacionales/porcentajes_DipNac_circuito.csv", encoding="utf-8")
+
+
+# Distribución de porcentajes
+# Comuna
+
+porcentajes_DipNac_comuna = porc_DipNac_comuna_OTROS.drop(["VOTOS_FIT_DIPNAC","VOTOS_CF_DIPNAC","VOTOS_FDT_DIPNAC",
+                                                       "VOTOS_JXC_DIPNAC", "VOTOS_ULD_DIPNAC",
+                                                       "VOTOS_NULO_DIPNAC","VOTOS_RECURRIDO_DIPNAC",
+                                                       "VOTOS_IMPUGNADO_DIPNAC","VOTOS_BLANCO_DIPNAC",
+                                                       "VOTOS_OTROS_DIPNAC"
+                                                       ], axis=1, inplace=False)
+
+for x in range(0, 15):
+    porcentajes_DipNac_comuna.iloc[x, 0] = 100
+
+porcentajes_DipNac_comuna.to_csv("data/diputados_nacionales/porcentajes_DipNac_comuna.csv", encoding="utf-8")

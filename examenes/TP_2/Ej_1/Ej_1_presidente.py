@@ -450,7 +450,7 @@ porcentajes_OTROS = pd.Series()
 
 
 for n in range(0, 166):
-    porcentaje = (porc_pres_circuito_OTROS.iloc[n, -1] / porc_pres_circuito_OTROS.iloc[n, 2] * 100)
+    porcentaje = ((porc_pres_circuito_OTROS.iloc[n, -1] / porc_pres_circuito_OTROS.iloc[n, 2] * 100).round(2))
     porcentaje = pd.Series(porcentaje)
     porcentajes_OTROS = porcentajes_OTROS.append(porcentaje, ignore_index=True)
 

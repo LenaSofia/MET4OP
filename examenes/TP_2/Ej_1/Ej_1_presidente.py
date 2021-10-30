@@ -82,7 +82,7 @@ porc_pres_circuito_FIT = porc_pres_circuito_FIT.rename(columns={"VOTOS_TOTALES":
                                                           "PORCENTAJE_AGRUPACION": "PORCENTAJE_FIT_PRES"})
 
 # Cambio de nombres FIT comuna
-porc_pres_circuito_FIT = porc_pres_circuito_FIT.rename(columns={"VOTOS_TOTALES": "VOTOS_TOTALES_PRES",
+porc_pres_comuna_FIT = porc_pres_comuna_FIT.rename(columns={"VOTOS_TOTALES": "VOTOS_TOTALES_PRES",
                                                           "VOTOS_AGRUPACION": "VOTOS_FIT_PRES",
                                                           "PORCENTAJE_AGRUPACION": "PORCENTAJE_FIT_PRES"})
 
@@ -116,7 +116,7 @@ porc_pres_circuito_NOS = porc_pres_circuito_NOS.rename(columns={"VOTOS_TOTALES":
                                                           "PORCENTAJE_AGRUPACION": "PORCENTAJE_NOS_PRES"})
 
 # Cambio de nombres NOS comuna
-porc_pres_circuito_NOS = porc_pres_circuito_NOS.rename(columns={"VOTOS_TOTALES": "VOTOS_TOTALES_PRES",
+porc_pres_comuna_NOS = porc_pres_comuna_NOS.rename(columns={"VOTOS_TOTALES": "VOTOS_TOTALES_PRES",
                                                           "VOTOS_AGRUPACION": "VOTOS_NOS_PRES",
                                                           "PORCENTAJE_AGRUPACION": "PORCENTAJE_NOS_PRES"})
 
@@ -150,7 +150,7 @@ porc_pres_circuito_JXC = porc_pres_circuito_JXC.rename(columns={"VOTOS_TOTALES":
                                                           "PORCENTAJE_AGRUPACION": "PORCENTAJE_JXC_PRES"})
 
 # Cambio de nombres JXC comuna
-porc_pres_circuito_JXC = porc_pres_circuito_JXC.rename(columns={"VOTOS_TOTALES": "VOTOS_TOTALES_PRES",
+porc_pres_comuna_JXC = porc_pres_comuna_JXC.rename(columns={"VOTOS_TOTALES": "VOTOS_TOTALES_PRES",
                                                           "VOTOS_AGRUPACION": "VOTOS_JXC_PRES",
                                                           "PORCENTAJE_AGRUPACION": "PORCENTAJE_JXC_PRES"})
 
@@ -184,7 +184,7 @@ porc_pres_circuito_FDT = porc_pres_circuito_FDT.rename(columns={"VOTOS_TOTALES":
                                                           "PORCENTAJE_AGRUPACION": "PORCENTAJE_FDT_PRES"})
 
 # Cambio de nombres FDT comuna
-porc_pres_circuito_FDT = porc_pres_circuito_FDT.rename(columns={"VOTOS_TOTALES": "VOTOS_TOTALES_PRES",
+porc_pres_comuna_FDT = porc_pres_comuna_FDT.rename(columns={"VOTOS_TOTALES": "VOTOS_TOTALES_PRES",
                                                           "VOTOS_AGRUPACION": "VOTOS_FDT_PRES",
                                                           "PORCENTAJE_AGRUPACION": "PORCENTAJE_FDT_PRES"})
 
@@ -218,7 +218,7 @@ porc_pres_circuito_CF = porc_pres_circuito_CF.rename(columns={"VOTOS_TOTALES": "
                                                           "PORCENTAJE_AGRUPACION": "PORCENTAJE_CF_PRES"})
 
 # Cambio de nombres CF comuna
-porc_pres_circuito_CF = porc_pres_circuito_CF.rename(columns={"VOTOS_TOTALES": "VOTOS_TOTALES_PRES",
+porc_pres_comuna_CF = porc_pres_comuna_CF.rename(columns={"VOTOS_TOTALES": "VOTOS_TOTALES_PRES",
                                                           "VOTOS_AGRUPACION": "VOTOS_CF_PRES",
                                                           "PORCENTAJE_AGRUPACION": "PORCENTAJE_CF_PRES"})
 
@@ -252,7 +252,7 @@ porc_pres_circuito_ULD = porc_pres_circuito_ULD.rename(columns={"VOTOS_TOTALES":
                                                           "PORCENTAJE_AGRUPACION": "PORCENTAJE_ULD_PRES"})
 
 # Cambio de nombres ULD comuna
-porc_pres_circuito_ULD = porc_pres_circuito_ULD.rename(columns={"VOTOS_TOTALES": "VOTOS_TOTALES_PRES",
+porc_pres_comuna_ULD = porc_pres_comuna_ULD.rename(columns={"VOTOS_TOTALES": "VOTOS_TOTALES_PRES",
                                                           "VOTOS_AGRUPACION": "VOTOS_ULD_PRES",
                                                           "PORCENTAJE_AGRUPACION": "PORCENTAJE_ULD_PRES"})
 
@@ -286,7 +286,7 @@ porc_pres_circuito_BLANCO = porc_pres_circuito_BLANCO.rename(columns={"VOTOS_TOT
                                                           "PORCENTAJE_AGRUPACION": "PORCENTAJE_BLANCO_PRES"})
 
 # Cambio de nombres BLANCO comuna
-porc_pres_circuito_BLANCO = porc_pres_circuito_BLANCO.rename(columns={"VOTOS_TOTALES": "VOTOS_TOTALES_PRES",
+porc_pres_comuna_BLANCO = porc_pres_comuna_BLANCO.rename(columns={"VOTOS_TOTALES": "VOTOS_TOTALES_PRES",
                                                           "VOTOS_AGRUPACION": "VOTOS_BLANCO_PRES",
                                                           "PORCENTAJE_AGRUPACION": "PORCENTAJE_BLANCO_PRES"})
 
@@ -320,7 +320,7 @@ porc_pres_circuito_IMPUGNADO = porc_pres_circuito_IMPUGNADO.rename(columns={"VOT
                                                           "PORCENTAJE_AGRUPACION": "PORCENTAJE_IMPUGNADO_PRES"})
 
 # Cambio de nombres IMPUGNADO comuna
-porc_pres_circuito_IMPUGNADO = porc_pres_circuito_IMPUGNADO.rename(columns={"VOTOS_TOTALES": "VOTOS_TOTALES_PRES",
+porc_pres_comuna_IMPUGNADO = porc_pres_comuna_IMPUGNADO.rename(columns={"VOTOS_TOTALES": "VOTOS_TOTALES_PRES",
                                                           "VOTOS_AGRUPACION": "VOTOS_IMPUGNADO_PRES",
                                                           "PORCENTAJE_AGRUPACION": "PORCENTAJE_IMPUGNADO_PRES"})
 
@@ -354,7 +354,7 @@ porc_pres_circuito_NULO = porc_pres_circuito_NULO.rename(columns={"VOTOS_TOTALES
                                                           "PORCENTAJE_AGRUPACION": "PORCENTAJE_NULO_PRES"})
 
 # Cambio de nombres NULO comuna
-porc_pres_circuito_NULO = porc_pres_circuito_NULO.rename(columns={"VOTOS_TOTALES": "VOTOS_TOTALES_PRES",
+porc_pres_comuna_NULO = porc_pres_comuna_NULO.rename(columns={"VOTOS_TOTALES": "VOTOS_TOTALES_PRES",
                                                           "VOTOS_AGRUPACION": "VOTOS_NULO_PRES",
                                                           "PORCENTAJE_AGRUPACION": "PORCENTAJE_NULO_PRES"})
 
@@ -388,7 +388,7 @@ porc_pres_circuito_RECURRIDO = porc_pres_circuito_RECURRIDO.rename(columns={"VOT
                                                           "PORCENTAJE_AGRUPACION": "PORCENTAJE_RECURRIDO_PRES"})
 
 # Cambio de nombres RECURRIDO comuna
-porc_pres_circuito_RECURRIDO = porc_pres_circuito_RECURRIDO.rename(columns={"VOTOS_TOTALES": "VOTOS_TOTALES_PRES",
+porc_pres_comuna_RECURRIDO = porc_pres_comuna_RECURRIDO.rename(columns={"VOTOS_TOTALES": "VOTOS_TOTALES_PRES",
                                                           "VOTOS_AGRUPACION": "VOTOS_RECURRIDO_PRES",
                                                           "PORCENTAJE_AGRUPACION": "PORCENTAJE_RECURRIDO_PRES"})
 
@@ -401,7 +401,7 @@ porc_pres_comuna_RECURRIDO.to_csv("data/presidente/RECURRIDO/pres_RECURRIDO_comu
 
 #%%
 
-# Porcentaje resultados presidenciales
+# DataFrame con porcentaje resultados presidenciales completo, circuito
 
 
 porc_pres_circuito = pd.merge(left=porc_pres_circuito_FIT, right=porc_pres_circuito_CF, left_index=True, right_index=True, suffixes=('', '_1'))
@@ -456,6 +456,70 @@ for n in range(0, 166):
 
 porc_pres_circuito_OTROS['PORCENTAJE_OTROS_PRES'] = porcentajes_OTROS
 
+porc_pres_circuito_OTROS.index = porc_pres_circuito_OTROS['NOMBRE_REGION']
+
 porc_pres_circuito_OTROS.to_csv("data/presidente/pres_circuito_OTROS.csv", encoding="utf-8")
 
 
+
+#%%
+
+
+
+# DataFrame con porcentaje resultados presidenciales completo
+
+
+porc_pres_comuna = pd.merge(left=porc_pres_comuna_FIT, right=porc_pres_comuna_CF, left_index=True, right_index=True, suffixes=('', '_1'))
+porc_pres_comuna = pd.merge(left=porc_pres_comuna, right=porc_pres_comuna_FDT, left_index=True, right_index=True, suffixes=('', '_3'))
+porc_pres_comuna = pd.merge(left=porc_pres_comuna, right=porc_pres_comuna_JXC, left_index=True, right_index=True, suffixes=('', '_5'))
+porc_pres_comuna = pd.merge(left=porc_pres_comuna, right=porc_pres_comuna_NOS, left_index=True, right_index=True, suffixes=('', '_7'))
+porc_pres_comuna = pd.merge(left=porc_pres_comuna, right=porc_pres_comuna_ULD, left_index=True, right_index=True, suffixes=('', '_9'))
+porc_pres_comuna = pd.merge(left=porc_pres_comuna, right=porc_pres_comuna_NULO, left_index=True, right_index=True, suffixes=('', '_11'))
+porc_pres_comuna = pd.merge(left=porc_pres_comuna, right=porc_pres_comuna_RECURRIDO, left_index=True, right_index=True, suffixes=('', '_13'))
+porc_pres_comuna = pd.merge(left=porc_pres_comuna, right=porc_pres_comuna_IMPUGNADO, left_index=True, right_index=True, suffixes=('', '_15'))
+porc_pres_comuna = pd.merge(left=porc_pres_comuna, right=porc_pres_comuna_BLANCO, left_index=True, right_index=True, suffixes=('', '_17'))
+
+porc_pres_comuna.drop(['VOTOS_TOTALES_PRES_1', 'VOTOS_TOTALES_PRES_3', 'VOTOS_TOTALES_PRES_5', 'VOTOS_TOTALES_PRES_7',
+                        'VOTOS_TOTALES_PRES_9', 'VOTOS_TOTALES_PRES_11', 'VOTOS_TOTALES_PRES_13',
+                         'VOTOS_TOTALES_PRES_15', 'VOTOS_TOTALES_PRES_17'], axis=1, inplace=True)
+
+porc_pres_comuna.to_csv("data/presidente/pres_comuna.csv", encoding="utf-8")
+
+
+#%%
+
+# Le agrego una columna al df con el porcentaje de voto de otras agrupaciones
+
+porc_pres_comuna_OTROS = pd.read_csv("data/presidente/pres_comuna.csv")
+
+lista_restos_comuna = pd.Series()
+
+for n in range(0, 15):
+    resto_comuna = porc_pres_comuna_OTROS.iloc[n, 1] - (porc_pres_comuna_OTROS.iloc[n, 2] +
+                                                   porc_pres_comuna_OTROS.iloc[n, 4] +
+                                                   porc_pres_comuna_OTROS.iloc[n, 6] +
+                                                   porc_pres_comuna_OTROS.iloc[n, 8] +
+                                                   porc_pres_comuna_OTROS.iloc[n, 10] +
+                                                   porc_pres_comuna_OTROS.iloc[n, 12] +
+                                                   porc_pres_comuna_OTROS.iloc[n, 14] +
+                                                   porc_pres_comuna_OTROS.iloc[n, 16] +
+                                                   porc_pres_comuna_OTROS.iloc[n, 18] +
+                                                   porc_pres_comuna_OTROS.iloc[n, 20])
+    resto_comuna = pd.Series(resto_comuna)
+    lista_restos_comuna = lista_restos_comuna.append(resto_comuna, ignore_index=True)
+
+
+porc_pres_comuna_OTROS['VOTOS_OTROS_PRES'] = lista_restos_comuna
+
+porcentajes_OTROS_comuna = pd.Series()
+
+
+for n in range(0, 15):
+    porcentaje_comuna = ((porc_pres_comuna_OTROS.iloc[n, -1] / porc_pres_comuna_OTROS.iloc[n, 1] * 100).round(2))
+    porcentaje_comuna = pd.Series(porcentaje_comuna)
+    porcentajes_OTROS_comuna = porcentajes_OTROS.append(porcentaje_comuna, ignore_index=True)
+
+porc_pres_comuna_OTROS['PORCENTAJE_OTROS_PRES'] = porcentajes_OTROS_comuna
+
+porc_pres_comuna_OTROS.index = porc_pres_comuna_OTROS['NOMBRE_REGION']
+porc_pres_comuna_OTROS.to_csv("data/presidente/pres_comuna_OTROS.csv", encoding="utf-8")

@@ -460,7 +460,7 @@ porc_pres_circuito_OTROS.index = porc_pres_circuito_OTROS['NOMBRE_REGION']
 
 porc_pres_circuito_OTROS.drop(["NOMBRE_REGION"], axis=1, inplace=True)
 
-porc_pres_circuito_OTROS.to_csv("data/presidente/pres_circuito_OTROS.csv", encoding="utf-8")
+porc_pres_circuito_OTROS.to_csv("data/presidente/pres_circuito_completo.csv", encoding="utf-8")
 
 
 
@@ -525,7 +525,7 @@ porc_pres_comuna_OTROS['PORCENTAJE_OTROS_PRES'] = porcentajes_OTROS_comuna
 
 porc_pres_comuna_OTROS.index = porc_pres_comuna_OTROS['NOMBRE_REGION']
 porc_pres_comuna_OTROS.drop(["NOMBRE_REGION"], axis=1, inplace=True)
-porc_pres_comuna_OTROS.to_csv("data/presidente/pres_comuna_OTROS.csv", encoding="utf-8")
+porc_pres_comuna_OTROS.to_csv("data/presidente/pres_comuna_completo.csv", encoding="utf-8")
 
 
 #%%

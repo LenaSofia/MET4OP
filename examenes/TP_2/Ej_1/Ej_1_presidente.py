@@ -458,6 +458,8 @@ porc_pres_circuito_OTROS['PORCENTAJE_OTROS_PRES'] = porcentajes_OTROS
 
 porc_pres_circuito_OTROS.index = porc_pres_circuito_OTROS['NOMBRE_REGION']
 
+porc_pres_circuito_OTROS.drop(["NOMBRE_REGION"], axis=1, inplace=True)
+
 porc_pres_circuito_OTROS.to_csv("data/presidente/pres_circuito_OTROS.csv", encoding="utf-8")
 
 
@@ -488,7 +490,7 @@ porc_pres_comuna.to_csv("data/presidente/pres_comuna.csv", encoding="utf-8")
 
 #%%
 
-# Le agrego una columna al df con el porcentaje de voto de otras agrupaciones
+# Le agrego una columna al df con el porcentaje de voto de otras agrupaciones por comuna
 
 porc_pres_comuna_OTROS = pd.read_csv("data/presidente/pres_comuna.csv")
 
@@ -522,6 +524,7 @@ for n in range(0, 15):
 porc_pres_comuna_OTROS['PORCENTAJE_OTROS_PRES'] = porcentajes_OTROS_comuna
 
 porc_pres_comuna_OTROS.index = porc_pres_comuna_OTROS['NOMBRE_REGION']
+porc_pres_comuna_OTROS.drop(["NOMBRE_REGION"], axis=1, inplace=True)
 porc_pres_comuna_OTROS.to_csv("data/presidente/pres_comuna_OTROS.csv", encoding="utf-8")
 
 
@@ -536,7 +539,8 @@ distrib_pres_circuito = porc_pres_circuito_OTROS.drop(["PORCENTAJE_FIT_PRES", "P
                                                        "PORCENTAJE_NOS_PRES", "PORCENTAJE_ULD_PRES",
                                                         "PORCENTAJE_NULO_PRES", "PORCENTAJE_RECURRIDO_PRES",
                                                        "PORCENTAJE_IMPUGNADO_PRES", "PORCENTAJE_BLANCO_PRES",
-                                                       "PORCENTAJE_OTROS_PRES"], axis=1, inplace=False)
+                                                       "PORCENTAJE_OTROS_PRES", "NOMBRE_REGION"
+                                                       ], axis=1, inplace=False)
 
 distrib_pres_circuito.to_csv("data/presidente/distrib_pres_circuito.csv", encoding="utf-8")
 
@@ -550,7 +554,8 @@ distrib_pres_comuna = porc_pres_comuna_OTROS.drop(["PORCENTAJE_FIT_PRES", "PORCE
                                                        "PORCENTAJE_NOS_PRES", "PORCENTAJE_ULD_PRES",
                                                         "PORCENTAJE_NULO_PRES", "PORCENTAJE_RECURRIDO_PRES",
                                                        "PORCENTAJE_IMPUGNADO_PRES", "PORCENTAJE_BLANCO_PRES",
-                                                       "PORCENTAJE_OTROS_PRES"], axis=1, inplace=False)
+                                                       "PORCENTAJE_OTROS_PRES", "NOMBRE_REGION"
+                                                   ], axis=1, inplace=False)
 
 distrib_pres_comuna.to_csv("data/presidente/distrib_pres_comuna.csv", encoding="utf-8")
 
@@ -562,7 +567,11 @@ porcentajes_pres_circuito = porc_pres_circuito_OTROS.drop(["VOTOS_FIT_PRES","VOT
                                                        "VOTOS_JXC_PRES","VOTOS_NOS_PRES", "VOTOS_ULD_PRES",
                                                        "VOTOS_NULO_PRES","VOTOS_RECURRIDO_PRES",
                                                        "VOTOS_IMPUGNADO_PRES","VOTOS_BLANCO_PRES",
-                                                       "VOTOS_OTROS_PRES"], axis=1, inplace=False)
+                                                       "VOTOS_OTROS_PRES", "NOMBRE_REGION"
+                                                           ], axis=1, inplace=False)
+
+for x in range(0, 166):
+    porcentajes_pres_circuito.iloc[x, 1] = 100
 
 porcentajes_pres_circuito.to_csv("data/presidente/porcentajes_pres_circuito.csv", encoding="utf-8")
 
@@ -574,6 +583,10 @@ porcentajes_pres_comuna = porc_pres_comuna_OTROS.drop(["VOTOS_FIT_PRES","VOTOS_C
                                                        "VOTOS_JXC_PRES","VOTOS_NOS_PRES", "VOTOS_ULD_PRES",
                                                        "VOTOS_NULO_PRES","VOTOS_RECURRIDO_PRES",
                                                        "VOTOS_IMPUGNADO_PRES","VOTOS_BLANCO_PRES",
-                                                       "VOTOS_OTROS_PRES"], axis=1, inplace=False)
+                                                       "VOTOS_OTROS_PRES", "NOMBRE_REGION"
+                                                       ], axis=1, inplace=False)
+
+for x in range(0, 15):
+    porcentajes_pres_comuna.iloc[x, 0] = 100
 
 porcentajes_pres_comuna.to_csv("data/presidente/porcentajes_pres_comuna.csv", encoding="utf-8")

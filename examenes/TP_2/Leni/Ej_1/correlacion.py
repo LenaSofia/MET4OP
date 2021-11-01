@@ -24,4 +24,6 @@ plt.matshow(corr_DF)
 plt.show()
 print(corr_DF)
 
-corr_DF.to_csv("corralcion.csv")
+correlacion = pd.DataFrame(corr_DF)
+print(correlacion)
+correlacion.to_csv("corralcion.csv")

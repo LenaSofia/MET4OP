@@ -18,7 +18,7 @@ for y in range(1,18):
 
 print(DF)
 
-corr_DF = DF.corr(method='pearson')
+corr_DF = DF.corr()
 
 plt.matshow(corr_DF)
 plt.show()

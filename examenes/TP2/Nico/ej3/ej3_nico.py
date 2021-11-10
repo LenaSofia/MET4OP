@@ -1,4 +1,4 @@
-
+#%%
 
 import pandas as pd, matplotlib as plt, geopandas as gpd, contextily as ctx, numpy as np
 
@@ -44,4 +44,32 @@ censo_persona_edad
 # %% 
 # Me gustaría conseguir el promedio de edad por hogar, ¿cómo hago eso?
 censo_persona_edad.groupby(["HOGAR_REF_ID"])["P03"].mean().to_frame()
+# %%
+
+censo = censo.to_crs(epsg=3857)
+
+# %%
+
+# No tiene sentido
+# %%
+# Quiero formar un mapa de comunas
+# Lo lograste! Te feilicito capo! ¿Ahora de qué carajo te sirve?
+
+resultadosc = (resultados.dissolve(by=['departamen']))
+resultadosc.plot(figsize=(10, 10), alpha= 0.35, edgecolor= 'k')
+resultadosc
+# %%
+sub_resultados = resultados[["departamen", 'circuito', 'geometry']]
+sub_resultados
+# %% 
+# Hacer sjoin con el centroide de los radios?
+censo['centroide'] = censo["geometry"].centroid
+# %%
+censo_centroide = censo.set_geometry('centroide')
+censo_centroide.head()
+# %%
+sjoin2= gpd.sjoin(resultados,censo_centroide['centroide','link'], how="left", op= 'contains')
+sjoin2.head() 
+# NO FUNCIONO COMO LO ESPERABA
+#¿QUE ESTARE HACIENDO MAL?
 # %%

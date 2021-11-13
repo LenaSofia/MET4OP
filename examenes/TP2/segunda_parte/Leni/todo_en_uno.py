@@ -173,11 +173,14 @@ join.to_csv("geom_join.csv")
 
 # Mergeo el join con los datos geográficos y el DF de las elecciones
 
-DF_completo = pd.merge(join, elecciones_recortado, on="CODIGO_CIRCUITO")
-DF_completo = DF_completo.drop(columns=["index_right"], axis=1)
-DF_completo = DF_completo.drop(DF_completo.columns[[-1, -1]], axis='columns')
+DF_geo_elecciones = pd.merge(join, elecciones_recortado, on="CODIGO_CIRCUITO")
+DF_geo_elecciones = DF_geo_elecciones.drop(columns=["index_right"], axis=1)
+DF_geo_elecciones = DF_geo_elecciones.drop(DF_geo_elecciones.columns[[-1, -1]], axis='columns')
 
 
 #%%
 
-DF_completo = pd.merge(DF_completo, censo_cortado, on="LINK")
+DF_geo_censo = pd.merge(join, censo_cortado, on="LINK")
+
+# Seria ideal mergear estos dos, por ejemplo haciendo:
+# DF_completo = pd.merge(DF_geo_censo, elecciones_recortado, on="CODIGO_CIRCUITO")

@@ -47,5 +47,12 @@ elecc_comp_geo.to_csv("elecc_comp_geo.csv")
 
 print("aaa")
 #%%
-# pruebas
 
+elecciones_recortado = elecc_comp_geo.drop(elecc_comp_geo.columns[[0, 0]], axis='columns')
+elecciones_recortado = elecciones_recortado.drop(columns=["distrito", "provincia", "cabecera", "indec_p",
+                                                "indec_d", "CODIGO_DISTRITO", "CODIGO_AGRUPACION", "departamen"],
+                                                 axis=1)
+
+#%%
+
+elecciones_recortado.to_csv("elecciones_recortado.csv")

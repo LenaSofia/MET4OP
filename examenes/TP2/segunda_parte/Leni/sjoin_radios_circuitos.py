@@ -41,13 +41,14 @@ dato = 0
 for fila in range(0, 167):
     dato = "1" + str(circuitos.loc[fila, "indec_d"])
     dato += "00" + str(circuitos.loc[fila, "circuito"])
-
-    circuitos.loc[fila, "LINK_circuito"] = dato
+    circuitos.loc[fila, "CODIGO_CIRCUITO"] = int(dato)
+#    if pd.isna(circuitos.loc[fila, "CODIGO_CIRCUITO"]):
+#        circuitos = circuitos.drop([fila, "CODIGO-CIRCUITO"])
 
 #%%
 # Me quedo solo con las columnas que me interesan
-sub_circuitos = circuitos[["LINK_circuito", "geometry"]]
-sub_circuitos.sort_values(by=["LINK_circuito"])
+sub_circuitos = circuitos[["CODIGO_CIRCUITO", "geometry"]]
+sub_circuitos.sort_values(by=["CODIGO_CIRCUITO"])
 
 # %%
 # Hago el condenado Spatial Join
@@ -57,7 +58,7 @@ join = gpd.sjoin(sub_radios, sub_circuitos, how='left', op= 'within')
 #%% [markdown]
 #### Prueba para ver si esta bien hecho el merge
 #%%
-join.sort_values(by= "LINK_circuito").head(20)
+join.sort_values(by= "CODIGO_CIRCUITO").head(20)
 # %%
 # Construyo un DF que solo contenga los radios que corresponden al circuito 01001001
 prueba_radios = sub_radios.iloc[[2387, 2442, 2390, 2328, 2588, 2483, 2330, 2488, 2439, 2332, 2552, 2498, 2498, 2544, 2541, 2598, 2394, 2549, 2434, 2339]]

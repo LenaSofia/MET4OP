@@ -1,28 +1,13 @@
 import pandas as pd, matplotlib.pyplot as plt, geopandas as gpd, contextily as ctx, numpy as np
 
-# %% [markdown]
-
-### Mapas
 # %%
+#%%
+#%%
 
-# %%
+#Censo
 
-censo = gpd.read_file(r'..\censo2010\radios_censales\Codgeo_CABA_con_datos\cabaxrdatos.shp')
-#censo.crs
 
-# %%
-#censo.to_crs(epsg=3857)
-
-# %%
-
-#censo.plot(figsize=(10, 10), alpha=0.25, edgecolor='k', color='yellow')
-#plt.show()
-
-# %% [markdown]
-
-### Datos
-
-# %%
+#%%
 
 # Importo csvs
 
@@ -99,10 +84,100 @@ censo_cortado = pd.merge(censo_cortado, censo_persona, on="HOGAR_REF_ID")
 
 censo_cortado.to_csv("censo_cortado.csv")
 
+
+
+#%%
+#%%
+#%%
+
+# Elecciones
+
+
+#%%
+
+# Datos
+
+resultados = pd.read_csv('../elecciones_2019/resultados/120819-054029/datos_agrup.csv')
+
+elecciones_recortado = resultados.drop(columns=["CODIGO_DISTRITO", "CODIGO_AGRUPACION", "CODIGO_SECCION"],
+                                                 axis=1)
+
+elecciones_recortado.to_csv("elecciones_cortado.csv")
+
+
+
+#%%
+#%%
+#%%
+
+
+# Join datos georreferenciados
+
+#%%
+
+resultados_gpd = gpd.read_file(r'..\elecciones_2019\CABA.shp')
+censo_gpd = gpd.read_file(r'..\censo2010\radios_censales\Codgeo_CABA_con_datos\cabaxrdatos.shp')
+
 # %%
 
-# Ahora uno el censo cortado con el censo geo-referenciado mediante el link:
+circuitos = resultados_gpd.to_crs(epsg=3857)
+radios = censo_gpd.to_crs(epsg=3857)
 
-#censo_cort_geo = pd.merge(censo_cortado, censo, on="LINK")
+# %% [markdown]
 
-#censo_cort_geo.to_csv("censo_cort_geo.csv")
+#### El merge de Radios y Circuitos
+
+#%%
+# Primero calculo el centroide de los radios electorales
+radios['centroide'] = radios['geometry'].centroid
+# %%
+# Luego hago esos centroides su columna de geometrias
+radios_cent = radios.set_geometry('centroide')
+# %%
+# Me quedo solamente con las columnas que em interesan
+sub_radios = radios_cent[['LINK', 'geometry', 'centroide']]
+sub_radios.sort_values(by=["LINK"])
+# %%
+# Construyo el link de los circuitos concatenando columnas
+
+dato = 0
+
+for fila in range(0, 167):
+    dato = "1" + str(circuitos.loc[fila, "indec_d"])
+    dato += "00" + str(circuitos.loc[fila, "circuito"])
+    circuitos.loc[fila, "CODIGO_CIRCUITO"] = int(dato)
+
+#%%
+# Me quedo solo con las columnas que me interesan
+sub_circuitos = circuitos[["CODIGO_CIRCUITO", "geometry"]]
+sub_circuitos.sort_values(by=["CODIGO_CIRCUITO"])
+
+# %%
+# Hago el condenado Spatial Join
+join = gpd.sjoin(sub_radios, sub_circuitos, how='left', op= 'within')
+
+# %%
+# Exporto el join a un .csv
+
+join.to_csv("geom_join.csv")
+
+
+
+#%%
+#%%
+#%%
+
+# Join datos georreferenciados combinados con elecciones y con censo
+
+#%%
+
+# Mergeo el join con los datos geográficos y el DF de las elecciones
+
+DF_completo = pd.merge(join, elecciones_recortado, on="CODIGO_CIRCUITO")
+DF_completo = DF_completo.drop(columns=["index_right"], axis=1)
+DF_completo = DF_completo.drop(DF_completo.columns[[-1, -1]], axis='columns')
+
+
+#%%
+
+DF_completo = pd.merge(DF_completo, censo_cortado, on="LINK")

@@ -17,8 +17,8 @@ radios = censo.to_crs(epsg=3857)
 # %% [markdown]
 ### Datos
 
-censo_completo = pd.read_csv("censo_comp_geo.csv")
-elecciones_completo = pd.read_csv("elecc_comp_geo.csv")
+#censo_completo = pd.read_csv("censo_cortado.csv")
+#elecciones_completo = pd.read_csv("elecciones_cortado.csv")
 
 # %% [markdown]
 #### El merge de Radios y Circuitos
@@ -41,7 +41,7 @@ dato = 0
 for fila in range(0, 167):
     dato = "1" + str(circuitos.loc[fila, "indec_d"])
     dato += "00" + str(circuitos.loc[fila, "circuito"])
-    circuitos.loc[fila, "CODIGO_CIRCUITO"] = int(dato)
+    circuitos.loc[fila, "CODIGO_CIRCUITO"] = str(dato)
 #    if pd.isna(circuitos.loc[fila, "CODIGO_CIRCUITO"]):
 #        circuitos = circuitos.drop([fila, "CODIGO-CIRCUITO"])
 

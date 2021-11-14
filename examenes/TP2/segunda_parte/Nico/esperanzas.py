@@ -26,59 +26,21 @@ DF_16_mas["EDAD_AG"] = pd.cut(DF_16_mas["P03"], bins=[16, 17, 29, 39, 59, np.inf
 
 #%%
 DF_16_mas.to_csv("edad_agrupada_II.csv")
+
+#%% 
+# Probemos de otra forma xD
+esperanza_agrupada = DF_16_mas.groupby(["NOMBRE_REGION", "CODIGO_CIRCUITO"])["EDAD_AG"].mean().to_frame()
+esperanza_agrupada = esperanza_agrupada.rename(columns={"EDAD_AG": "ESPERANZA_EDAD_AGRUPADA"})
 # %%
-# Esperanza de edad de cada circuito:
-# Primero calculo la probabilidad de pertenecer a cada grupo de edad
+esperanza_agrupada_votos = pd.merge(DF_16_mas, esperanza_agrupada, on=["NOMBRE_REGION", "CODIGO_CIRCUITO"])
+esperanza_agrupada_votos.columns
 
-# Necesito que me cuente en cada circuito cuantas personas tengo de cada categoría
-DF_16_mas.sort_values(by="EDAD_AG")
-prob_edad = DF_16_mas.pivot_table(index=["CODIGO_CIRCUITO"], columns=["EDAD_AG"], aggfunc= "size")
-# prob_edad
+esperanza_agrupada_votos = esperanza_agrupada_votos[['geometry', 'centroide', 'CODIGO_CIRCUITO', 'NOMBRE_REGION',
+       'VOTOS_TOTALES_PRES', 'VOTOS_FIT_PRES', 'PORCENTAJE_FIT_PRES','ESPERANZA_EDAD_AGRUPADA' ]]
 
-#%%
-# AHora necesito saber el porcentaje de que una persona pertenezca a cada rango
-# df['Fruit Total']= df.iloc[:, -4:-1].sum(axis=1)
-
-prob_edad["POB_CIRC"] = prob_edad.iloc[:,:].sum(axis=1)
-prob_edad
-# %%
-# Con esto ya puedo saber la probabilidad de cada categoría, dividiendo la categoría por el total
-# (Debe existir una manera más eficiente de lograr esto, es bastante horrible)
-
-
-prob_edad["PROB_0"] = prob_edad[0] / prob_edad["POB_CIRC"]
-prob_edad["PROB_1"] = prob_edad[1] / prob_edad["POB_CIRC"]
-prob_edad["PROB_2"] = prob_edad[2] / prob_edad["POB_CIRC"]
-prob_edad["PROB_3"] = prob_edad[3] / prob_edad["POB_CIRC"]
-prob_edad["PROB_4"] = prob_edad[4] / prob_edad["POB_CIRC"]
-
-
-prob_edad
-
-# %%
-# Y con esto ya puedo sacar la esperanza
-
-prob_edad["ESPERANZA"] = (prob_edad['PROB_0'] * 0) + (prob_edad['PROB_1'] * 1) + (prob_edad['PROB_2'] * 2) + (prob_edad['PROB_3'] * 3) + (prob_edad['PROB_4'] * 4)
-prob_edad
-
-# Ahora a sacar la varianza
-# %%
-# ME quedo solo con la esperanza para mergear con la tabla original
-esperanza_circ = prob_edad[["POB_CIRC","ESPERANZA"]]
-# %%
-esperanza_circ
-# %%
-DF_16_esp = pd.merge(DF_16_mas, esperanza_circ, on="CODIGO_CIRCUITO")
-
-
-#%%
-# Media de todas las edades posibles y existentes
-
-
-
-
-DF_edad_mean = DF_edad.groupby(["NOMBRE_REGION", "CODIGO_CIRCUITO"])["P03"].mean().to_frame()
-DF_edad_mean
+esperanza_agrupada_votos.drop_duplicates("CODIGO_CIRCUITO", inplace=True)
+esperanza_agrupada_votos.sort_values(by="NOMBRE_REGION", inplace= True)
+esperanza_agrupada_votos.to_csv("esperanza_agrupada_votos.csv")
 # %% 
 # Media solo más 16
 
@@ -86,4 +48,45 @@ prom_edad_16_mas = DF_16_mas.groupby(["NOMBRE_REGION", "CODIGO_CIRCUITO"])["P03"
 prom_edad_16_mas
 
 
+# %%
+prom_edad_16_mas.to_csv("promedio_edad_circuito_16_para_arriba.csv")
+
+#%%
+prom_edad_16_mas = DF_16_mas.groupby(["NOMBRE_REGION", "CODIGO_CIRCUITO"])["P03"].mean().to_frame()
+prom_edad_16_mas = prom_edad_16_mas.rename(columns={"P03": "PROMEDIO_EDAD"})
+prom_edad_16_mas
+#%%
+std_edad_16_mas = DF_16_mas.groupby(["NOMBRE_REGION", "CODIGO_CIRCUITO"])["P03"].std().to_frame()
+std_edad_16_mas = std_edad_16_mas.rename(columns={"P03": "STD_EDAD"})
+
+std_edad_16_mas
+
+
+#%% 
+prom_std_edad_circuito = pd.merge(prom_edad_16_mas, std_edad_16_mas, on=["NOMBRE_REGION", "CODIGO_CIRCUITO"])
+prom_std_edad_circuito.head()
+
+# %%
+# Mergeo el promedio de edad con los datos electorales
+
+edad_y_votos = pd.merge(DF_16_mas, prom_std_edad_circuito, on= ["NOMBRE_REGION", "CODIGO_CIRCUITO"])
+edad_y_votos = edad_y_votos[['geometry', 'centroide', 'CODIGO_CIRCUITO', 'NOMBRE_REGION',
+       'VOTOS_TOTALES_PRES', 'VOTOS_FIT_PRES', 'PORCENTAJE_FIT_PRES', 'PROMEDIO_EDAD',
+       'STD_EDAD']]
+# %%
+# Elimina las edades particulares para que me quede el promedio de edad de cada circuito
+edad_y_votos.drop_duplicates("CODIGO_CIRCUITO", inplace=True)
+
+# %%
+# Media completa (no solo +16)
+
+media_edad_completa = DF_completo.groupby(["NOMBRE_REGION", "CODIGO_CIRCUITO"])["P03"].mean().to_frame()
+media_edad_completa.to_csv("media_edad_completa.csv")
+# %%
+# Mediana de edades más 16 por circuito:
+mediana_edad_mas16 = DF_16_mas.groupby(["NOMBRE_REGION", "CODIGO_CIRCUITO"])["P03"].median().to_frame()
+mediana_edad_mas16.rename(columns={"P03": "MEDIANA_EDAD"}, inplace= True)
+mediana_edad_mas16.to_csv("mediana_edad_mas16.csv")
+# %%
+DF_16_esp.columns
 # %%

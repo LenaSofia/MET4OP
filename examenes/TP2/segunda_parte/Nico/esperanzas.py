@@ -47,6 +47,9 @@ esperanza_agrupada_votos.to_csv("esperanza_agrupada_votos.csv")
 prom_edad_16_mas = DF_16_mas.groupby(["NOMBRE_REGION", "CODIGO_CIRCUITO"])["P03"].mean().to_frame()
 prom_edad_16_mas
 
+prom_edad_16mas_comuna = DF_16_mas.groupby(["NOMBRE_REGION"])["P03"].mean().to_frame()
+prom_edad_16mas_comuna.to_csv("promedio_edad_comuna_16_para_arriba.csv")
+
 
 # %%
 prom_edad_16_mas.to_csv("promedio_edad_circuito_16_para_arriba.csv")
@@ -87,6 +90,12 @@ media_edad_completa.to_csv("media_edad_completa.csv")
 mediana_edad_mas16 = DF_16_mas.groupby(["NOMBRE_REGION", "CODIGO_CIRCUITO"])["P03"].median().to_frame()
 mediana_edad_mas16.rename(columns={"P03": "MEDIANA_EDAD"}, inplace= True)
 mediana_edad_mas16.to_csv("mediana_edad_mas16.csv")
+
 # %%
-DF_16_esp.columns
+# Media entre 16 y 70
+DF_16_70 = DF_16_mas[DF_16_mas["P03"] < 70]
+DF_16_70.sort_values(by= "P03", ascending=False)
+# %%
+media_edad_16_70_circ = DF_16_70.groupby(["NOMBRE_REGION", "CODIGO_CIRCUITO"])["P03"].mean().to_frame()
+media_edad_16_70_circ.to_csv("media_circuito_16_70.csv")
 # %%

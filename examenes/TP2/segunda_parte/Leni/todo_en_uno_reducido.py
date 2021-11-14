@@ -1,13 +1,9 @@
 import pandas as pd, matplotlib.pyplot as plt, geopandas as gpd, contextily as ctx, numpy as np
 
 # %%
-#%%
-#%%
 
-#Censo
+# Censo
 
-
-#%%
 
 # Importo csvs
 
@@ -87,13 +83,9 @@ censo_cortado.to_csv("censo_cortado.csv")
 
 
 #%%
-#%%
-#%%
 
 # Elecciones
 
-
-#%%
 
 # Datos
 
@@ -108,13 +100,9 @@ resultados.to_csv("resultados.csv")
 
 
 #%%
-#%%
-#%%
-
 
 # Join datos georreferenciados
 
-#%%
 
 resultados_gpd = gpd.read_file(r'../elecciones_2019/CABA.shp')
 censo_gpd = gpd.read_file(r'../censo2010/radios_censales/Codgeo_CABA_con_datos/cabaxrdatos.shp')
@@ -124,11 +112,10 @@ censo_gpd = gpd.read_file(r'../censo2010/radios_censales/Codgeo_CABA_con_datos/c
 circuitos = resultados_gpd.to_crs(epsg=3857)
 radios = censo_gpd.to_crs(epsg=3857)
 
-# %% [markdown]
+# %%
 
 #### El merge de Radios y Circuitos
 
-#%%
 # Primero calculo el centroide de los radios electorales
 radios['centroide'] = radios['geometry'].centroid
 # %%
@@ -154,7 +141,7 @@ sub_circuitos = circuitos[["CODIGO_CIRCUITO", "geometry"]]
 sub_circuitos.sort_values(by=["CODIGO_CIRCUITO"])
 
 # %%
-# Hago el condenado Spatial Join
+# Hago el Spatial Join
 join = gpd.sjoin(sub_radios, sub_circuitos, how='left', op= 'within')
 
 # %%
@@ -165,40 +152,36 @@ join.to_csv("geom_join.csv")
 
 
 #%%
-#%%
-#%%
 
 # Join datos georreferenciados combinados con elecciones y con censo
 
-#%%
 
 # Mergeo el join con los datos geográficos y el DF de las elecciones
 
 DF_geo_elecciones = pd.merge(join, resultados, on="CODIGO_CIRCUITO")
-#DF_geo_elecciones = DF_geo_elecciones.drop(columns=["index_right", "CODIGO_CATEGORIA"], axis=1)
-#DF_geo_elecciones = DF_geo_elecciones.drop(DF_geo_elecciones.columns[[-1, -1]], axis='columns')
 
-# Borro los duplicados
-#DF_elecc_drop_duplicates = DF_geo_elecciones.drop_duplicates(subset=None,
-#                          keep='first',
-#                          inplace=False,
-#                          ignore_index=False)
-
-
-#DF_elecc_drop_duplicates.to_csv("DF_elecc_drop_duplicates.csv")
 
 #%%
+
+# Mergeo el join con los datos geográficos y el DF del censo
 
 DF_geo_censo = pd.merge(join, censo_cortado, on="LINK")
 DF_geo_censo = DF_geo_censo.drop(columns=["LINK", "index_right", "FRAC_REF_ID", "IDRADIO", "NHOG", "TOTPERS",
                                           "DPTO_REF_ID", "DPTO", "VIVIENDA_REF_ID", "HOGAR_REF_ID", "ALGUNBI",
                                           "IDFRAC", "PROV_REF_ID"], axis=1)
 
-# Acá con el drop duplicates da el mismo número, osea que no hace falta correrlo
+#%%
 
+# Mergeo datos geográficos + elecciones + censo
+
+DF_completo = pd.merge(DF_geo_elecciones, DF_geo_censo, on=["CODIGO_CIRCUITO", "geometry", "centroide"])
 
 #%%
-# Seria ideal mergear estos dos, por ejemplo haciendo:
-#DF_completo = pd.merge(DF_geo_censo, resultados, on="CODIGO_CIRCUITO")
 
-DF_completo = pd.merge(DF_geo_elecciones, DF_geo_censo, on="CODIGO_CIRCUITO")
+# Borro columnas que no me sirven
+
+DF_completo = DF_completo.drop(columns=["LINK", "index_right", "NOMDPTO"], axis=1)
+
+#%%
+
+DF_completo.to_csv("DF_completo.csv")

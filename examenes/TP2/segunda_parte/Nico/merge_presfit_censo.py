@@ -1,3 +1,4 @@
+#%%
 import pandas as pd, matplotlib.pyplot as plt, geopandas as gpd, contextily as ctx, numpy as np
 
 # %%
@@ -78,7 +79,7 @@ censo_cortado = pd.merge(censo_cortado, censo_persona, on="HOGAR_REF_ID")
 
 # Lo guardo en un csv
 
-censo_cortado.to_csv("censo_cortado.csv")
+# censo_cortado.to_csv("censo_cortado.csv")
 
 
 
@@ -89,15 +90,15 @@ censo_cortado.to_csv("censo_cortado.csv")
 
 # Datos
 
-elec_pres = pd.read_csv("D:/UBA/4to Cuarto año/Segundo cuatrimestre/Metodología de análisis en opinión pública/GITHUB_ANTERIOR/examenes/TP2/segunda_parte/Lena/DFs_elecciones/pres_circuito_completo.csv")
-elec_dips =pd.read_csv("D:/UBA/4to Cuarto año/Segundo cuatrimestre/Metodología de análisis en opinión pública/GITHUB_ANTERIOR/examenes/TP2/segunda_parte/Lena/DFs_elecciones/DipNac_circuito_completo.csv")
-
-resultados = pd.merge(elec_pres, elec_dips, on=["CODIGO_CIRCUITO", "NOMBRE_REGION", ])
-
-
-resultados.to_csv("resultados.csv")
+elec_pres = pd.read_csv("DFs_elecciones/pres_circuito_completo.csv")
+# elec_dips =pd.read_csv("DipNac_circuito_completo.csv")
+elec_pres.columns
+# resultados = pd.merge(elec_pres, elec_dips, on=["CODIGO_CIRCUITO", "NOMBRE_REGION", ])
 
 
+
+
+elec_pres_fit = elec_pres[["NOMBRE_REGION", "CODIGO_CIRCUITO", "VOTOS_TOTALES_PRES", "VOTOS_FIT_PRES", "PORCENTAJE_FIT_PRES",]]
 
 #%%
 
@@ -158,7 +159,7 @@ join.to_csv("geom_join.csv")
 
 # Mergeo el join con los datos geográficos y el DF de las elecciones
 
-DF_geo_elecciones = pd.merge(join, resultados, on="CODIGO_CIRCUITO")
+DF_geo_elecciones = pd.merge(join, elec_pres_fit, on="CODIGO_CIRCUITO")
 
 
 #%%
@@ -185,3 +186,9 @@ DF_completo = DF_completo.drop(columns=["LINK", "index_right", "NOMDPTO"], axis=
 #%%
 
 DF_completo.to_csv("DF_completo.csv")
+
+#%%
+# FDT
+elec_pres_fit_fdt = elec_pres[["NOMBRE_REGION", "CODIGO_CIRCUITO", "VOTOS_TOTALES_PRES", "VOTOS_FIT_PRES", "PORCENTAJE_FIT_PRES",'VOTOS_FDT_PRES', 'PORCENTAJE_FDT_PRES']]
+
+# %%

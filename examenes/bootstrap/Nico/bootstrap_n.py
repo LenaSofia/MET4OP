@@ -96,7 +96,7 @@ class bootstrap_data:
             # FInalmente, agrega el valor del coeficiente al DataFrame final
             coef_df.loc[len(coef_df)] = summary.iloc[-1,0]
             
-        return coef_df
+        return coef_df.quantile([0.025, 0.25,0.5, 0.75, 0.975])
         
 
 #%% [markdown]
@@ -118,12 +118,12 @@ edadqui_ref = {1: 'Sí', 2: 'No', 3: 'MISSING', 4: 'NOTAPPLICABLE'}
 edadqui_ref
 
 # %%
-ejemplo = bootstrap_data(px, py, 5, False)
+ejemplo = bootstrap_data(px, py, 100, False)
 ejemplo.bootstrap()
 
+#%%
 
-
-ejemplo2 = bootstrap_data(px, py, 5, True)
+ejemplo2 = bootstrap_data(px, py, 3, True)
 ejemplo2.bootstrap()
 # %%
 # Me gustaría poder darle un valor por defecto a 'constante', para que no sea necesario ponerlo

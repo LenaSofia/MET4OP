@@ -6,6 +6,10 @@ from numpy import random
 from patsy import dmatrix, dmatrices
 from statsmodels.formula.api import ols
 import statsmodels.api as sm
+import os
+import seaborn as sns
+import matplotlib.pyplot as plt
+%matplotlib inline
 # Dada una muestra D=(X,Y) de tamaño n indexadas con un variable I = list(range(n))  
 
 # Repetir K veces el siguiente procedimiento:
@@ -96,8 +100,10 @@ class bootstrap_data:
             # FInalmente, agrega el valor del coeficiente al DataFrame final
             coef_df.loc[len(coef_df)] = summary.iloc[-1,0]
             
-        return coef_df.quantile([0.025, 0.25,0.5, 0.75, 0.975])
+        cuantiles = coef_df.quantile([0.025, 0.25,0.5, 0.75, 0.975])
+        sns.displot(coef_df, color= 'blue') 
         
+        return cuantiles
 
 #%% [markdown]
 #### Ejemplo
@@ -118,9 +124,9 @@ edadqui_ref = {1: 'Sí', 2: 'No', 3: 'MISSING', 4: 'NOTAPPLICABLE'}
 edadqui_ref
 
 # %%
-ejemplo = bootstrap_data(px, py, 100, False)
+ejemplo = bootstrap_data(px, py, 20, False)
 ejemplo.bootstrap()
-
+  
 #%%
 
 ejemplo2 = bootstrap_data(px, py, 3, True)

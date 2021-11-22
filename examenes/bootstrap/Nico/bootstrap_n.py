@@ -106,30 +106,24 @@ class bootstrap_data:
         return cuantiles
 
 #%% [markdown]
-#### Ejemplo
-# Utilizo las variables EDADQUI y P12 (Usa o no computadora) del censo 
-# %%
-persona = pd.read_csv('persona.csv')
-px = persona['EDADQUI'].tolist()
-py = persona['P12'].tolist()
+#### Ejemplos
+# Me fijo si la variable 'weight' puede predecir la variable 'price' del dataset 'autos
+#%%
+# Ejemplo 1
+auto = pd.read_csv('auto.csv')
+ax = auto['weight'].tolist()
+ay = auto['price'].tolist()
 
-# %%
-# DIccionarios de etiquetas: EDADQUI
-p12_ref = {1: '0-4', 2: '5-9', 3: '10-14', 4: '15-19', 5:'20-24', 6: '25-29', 7: '30-34', 8: '35-39', 9: '40-44', 10: '45-49',11: '50-54', 12: '55-59', 13: '60-64', 14: '65-69', 15:'70-74', 16: '75-79', 17:'80-84', 18:'85-89', 19: '90-94',20: '95 y más', 21: 'NOTAPPLICABLE', 22: 'MISSING'} 
-p12_ref
+ejemploautos = bootstrap_data(ax,ay, 10000, False)
+ejemploautos.bootstrap()
 
 #%%
-# DIccionarios de etiquetas: P12
-edadqui_ref = {1: 'Sí', 2: 'No', 3: 'MISSING', 4: 'NOTAPPLICABLE'}
-edadqui_ref
+# Ejemplo 2
+auto = pd.read_csv('auto.csv')
+ax = auto['weight'].tolist()
+ay = auto['price'].tolist()
 
-# %%
-ejemplo = bootstrap_data(px, py, 20, False)
-ejemplo.bootstrap()
-  
-#%%
-
-ejemplo2 = bootstrap_data(px, py, 3, True)
-ejemplo2.bootstrap()
+ejemploautos = bootstrap_data(ax,ay, 10000, True)
+ejemploautos.bootstrap()
 # %%
 # Me gustaría poder darle un valor por defecto a 'constante', para que no sea necesario ponerlo

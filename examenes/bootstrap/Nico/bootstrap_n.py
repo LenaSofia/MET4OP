@@ -1,6 +1,5 @@
 #%%
 from os import replace
-import os
 import numpy as np
 import pandas as pd
 from numpy import random
@@ -39,17 +38,75 @@ import statsmodels.api as sm
 # iii) Histograma de cada y^pred que me interese
 
 #%%
-# Persona está dentro de persona.rar
-# El csv por sí solo es demasiado grande para github
-persona = pd.read_csv('persona.csv')
-#%%
-persona.columns
-# %%
-# Variables del censo a utilizar: X = EDADQUI (edades quinquenales), Y = P12 (utiliza computadora)
 
-d = persona[['EDADQUI', 'P12']]
-i = list(range(len(d)))
-i
+class bootstrap_data:
+    def __init__(self, x, y, k, constante):
+        self.x = x
+        self.y = y
+        self.k = k
+        self.d = pd.DataFrame(list(zip(self.x, self.y)), columns =['x', 'y'])
+        self.i = list(range(len(self.d)))
+        self.constante = constante
+        """
+         - Al llamar la clase, poner como argumentos dos listas
+         - 'K' es la cantidad de repeticiones 
+         - 'constante' es una variable booleana: Determina si la función le debe agregar constante o no
+         - Construye un dataframe "D" con ambas listas, cuyas columnas se llaman 'x' e 'y'
+         - Construye una lista "I" con el largo de "D"
+
+        """
+
+    def bootstrap(self):
+        
+        coef_df = pd.DataFrame({'coeficientes': []})
+             
+
+        for i in range(0, self.k):
+            # Construye una nueva lista "Ik" a partir del sampleo con repeticiones de I
+            Ik = np.random.choice(len(self.i), size = [len(self.i)], replace= True)
+
+            # Construye un nuevo DataFrame "dk" a partir de seleccionar las filas de índice
+            # que coinciden con "Ik"
+            dk = self.d.iloc[Ik]
+            
+            if self.constante == False:
+                # Covierte las columnas X e Y en listas, para poder agregarles la constane 
+                # y usarlas en statsmodels
+                yk = dk['y'].tolist()
+                xk = dk['x'].tolist()
+
+                # Agrega la constante para calcular regresión
+                xk = sm.add_constant(xk)
+
+                # Calcula la regresión
+                reg = sm.OLS(yk,xk).fit()
+            
+            elif self.constante == True:
+
+                reg = sm.OLS(dk['y'], dk['x']).fit()
+            
+            # Pasa la tabla de resumen a un html solo para poder agarrar el coeficiente
+            # y agregarlo al DF vacío
+            # Debería haber una manera más rápida de poder hacer esto, sin tener que pasar a html, pero no la encontré
+        
+            coef = reg.summary()
+            coef_html = coef.tables[1].as_html()
+            summary = pd.read_html(coef_html, header=0, index_col=0)[0]
+
+            # FInalmente, agrega el valor del coeficiente al DataFrame final
+            coef_df.loc[len(coef_df)] = summary.iloc[-1,0]
+            
+        return coef_df
+        
+
+#%% [markdown]
+#### Ejemplo
+# Utilizo las variables EDADQUI y P12 (Usa o no computadora) del censo 
+# %%
+persona = pd.read_csv('persona.csv')
+px = persona['EDADQUI'].tolist()
+py = persona['P12'].tolist()
+
 # %%
 # DIccionarios de etiquetas: EDADQUI
 p12_ref = {1: '0-4', 2: '5-9', 3: '10-14', 4: '15-19', 5:'20-24', 6: '25-29', 7: '30-34', 8: '35-39', 9: '40-44', 10: '45-49',11: '50-54', 12: '55-59', 13: '60-64', 14: '65-69', 15:'70-74', 16: '75-79', 17:'80-84', 18:'85-89', 19: '90-94',20: '95 y más', 21: 'NOTAPPLICABLE', 22: 'MISSING'} 
@@ -59,38 +116,14 @@ p12_ref
 # DIccionarios de etiquetas: P12
 edadqui_ref = {1: 'Sí', 2: 'No', 3: 'MISSING', 4: 'NOTAPPLICABLE'}
 edadqui_ref
-# %%
-# Ahora lo que quiero es elegir al azar n filas de PERSONA_REF_ID, pero que cada vez que se saque una 'bolilla' se vuelva a colocar
-
-I_k = np.random.choice(len(i), size = [len(i)], replace= True)
-I_k
 
 # %%
-# II) 
-# Ahora necesito agarrar las filas I_k de D para formar D_k
+ejemplo = bootstrap_data(px, py, 5, False)
+ejemplo.bootstrap()
 
-d_k = d.iloc[I_k]
-d_k.sort_index().head(20)
+
+
+ejemplo2 = bootstrap_data(px, py, 5, True)
+ejemplo2.bootstrap()
 # %%
-# III)
-
-# Es recontra por acá
-d2 = persona[['EDADQUI', 'P12']]
-i2 = list(range(len(d2)))
-
-I2_k = np.random.choice(len(i2), size = [len(i2)], replace= True)
-d2_k = d2.iloc[I2_k]
-
-y = d2_k['P12'].tolist()
-x = d2_k['EDADQUI'].tolist()
-x = sm.add_constant(x)
-
-
-result = sm.OLS(y,x).fit()
-result.summary()
-
-
-# 0.7962
-# 0.7952
-# 0.7957
-# %%
+# Me gustaría poder darle un valor por defecto a 'constante', para que no sea necesario ponerlo

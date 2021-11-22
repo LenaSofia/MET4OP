@@ -1,8 +1,12 @@
 #%%
 from os import replace
+import os
 import numpy as np
 import pandas as pd
 from numpy import random
+from patsy import dmatrix, dmatrices
+from statsmodels.formula.api import ols
+import statsmodels.api as sm
 # Dada una muestra D=(X,Y) de tamaño n indexadas con un variable I = list(range(n))  
 
 # Repetir K veces el siguiente procedimiento:
@@ -35,33 +39,58 @@ from numpy import random
 # iii) Histograma de cada y^pred que me interese
 
 #%%
-persona = pd.read_csv(r'C:\Users\Usuario\Desktop\MAOP\TP_2\MET4OP\examenes\TP2\segunda_parte\censo2010\persona.csv')
+# Persona está dentro de persona.rar
+# El csv por sí solo es demasiado grande para github
+persona = pd.read_csv('persona.csv')
 #%%
 persona.columns
 # %%
 # Variables del censo a utilizar: X = EDADQUI (edades quinquenales), Y = P12 (utiliza computadora)
 
-d = persona[['PERSONA_REF_ID','EDADQUI', 'P12']]
+d = persona[['EDADQUI', 'P12']]
 i = list(range(len(d)))
 i
 # %%
-# Tabla de etiquetas
-ref = pd.read_excel(r'C:\Users\Usuario\Desktop\edadqui_p12.xlsx')
-ref
+# DIccionarios de etiquetas: EDADQUI
+p12_ref = {1: '0-4', 2: '5-9', 3: '10-14', 4: '15-19', 5:'20-24', 6: '25-29', 7: '30-34', 8: '35-39', 9: '40-44', 10: '45-49',11: '50-54', 12: '55-59', 13: '60-64', 14: '65-69', 15:'70-74', 16: '75-79', 17:'80-84', 18:'85-89', 19: '90-94',20: '95 y más', 21: 'NOTAPPLICABLE', 22: 'MISSING'} 
+p12_ref
+
+#%%
+# DIccionarios de etiquetas: P12
+edadqui_ref = {1: 'Sí', 2: 'No', 3: 'MISSING', 4: 'NOTAPPLICABLE'}
+edadqui_ref
 # %%
 # Ahora lo que quiero es elegir al azar n filas de PERSONA_REF_ID, pero que cada vez que se saque una 'bolilla' se vuelva a colocar
 
 I_k = np.random.choice(len(i), size = [len(i)], replace= True)
+I_k
 
 # %%
+# II) 
 # Ahora necesito agarrar las filas I_k de D para formar D_k
-# De esta manera lo que logro es que se forme un nuevo DF donde solo aparecen las filas cuyos indices estan en I_k
-# Debería conseguir que se puedan repetir los valores de I_k, porque esta evitando eso y entonces df no queda de tamaño n
 
-df = d[d.index.isin(I_k)]
+d_k = d.iloc[I_k]
+d_k.sort_index().head(20)
 # %%
-df
+# III)
 
-# %%
-d.head(6)
+# Es recontra por acá
+d2 = persona[['EDADQUI', 'P12']]
+i2 = list(range(len(d2)))
+
+I2_k = np.random.choice(len(i2), size = [len(i2)], replace= True)
+d2_k = d2.iloc[I2_k]
+
+y = d2_k['P12'].tolist()
+x = d2_k['EDADQUI'].tolist()
+x = sm.add_constant(x)
+
+
+result = sm.OLS(y,x).fit()
+result.summary()
+
+
+# 0.7962
+# 0.7952
+# 0.7957
 # %%

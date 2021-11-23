@@ -2,7 +2,7 @@
 from os import replace
 import numpy as np
 import pandas as pd
-from numpy import random
+from numpy import fabs, random
 from patsy import dmatrix, dmatrices
 from statsmodels.formula.api import ols
 import statsmodels.api as sm
@@ -62,7 +62,7 @@ class bootstrap_data:
 
     def bootstrap(self):
         
-        coef_df = pd.DataFrame({'coeficientes': []})
+        coef_df = pd.DataFrame({'constante': [], 'x1': []})
              
 
         for i in range(0, self.k):
@@ -73,7 +73,7 @@ class bootstrap_data:
             # que coinciden con "Ik"
             dk = self.d.iloc[Ik]
             
-            if self.constante == False:
+            if self.constante == None:
                 # Covierte las columnas X e Y en listas, para poder agregarles la constane 
                 # y usarlas en statsmodels
                 yk = dk['y'].tolist()
@@ -84,8 +84,17 @@ class bootstrap_data:
 
                 # Calcula la regresión
                 reg = sm.OLS(yk,xk).fit()
-            
-            elif self.constante == True:
+
+                coef = reg.summary()
+                coef_html = coef.tables[1].as_html()
+                summary = pd.read_html(coef_html, header=0, index_col=0)[0]
+                
+                # FInalmente, agrega el valor del coeficiente al DataFrame final
+                coef_df.loc[len(coef_df),'constante'] = summary.iloc[0,0]
+                coef_df.loc[len(coef_df) -1,'x1'] = summary.iloc[-1,0]
+
+
+            elif self.constante != True:
 
                 reg = sm.OLS(dk['y'], dk['x']).fit()
             
@@ -93,15 +102,15 @@ class bootstrap_data:
             # y agregarlo al DF vacío
             # Debería haber una manera más rápida de poder hacer esto, sin tener que pasar a html, pero no la encontré
         
-            coef = reg.summary()
-            coef_html = coef.tables[1].as_html()
-            summary = pd.read_html(coef_html, header=0, index_col=0)[0]
+        cuantiles_c = coef_df[['constante']].quantile([0.025, 0.25,0.5, 0.75, 0.975])
+        cuantiles_x1 = coef_df[['x1']].quantile([0.025, 0.25,0.5, 0.75, 0.975])
+        cuantiles = pd.merge(cuantiles_c, cuantiles_x1, left_index=True, right_index=True)
 
-            # FInalmente, agrega el valor del coeficiente al DataFrame final
-            coef_df.loc[len(coef_df)] = summary.iloc[-1,0]
-            
-        cuantiles = coef_df.quantile([0.025, 0.25,0.5, 0.75, 0.975])
-        sns.displot(coef_df, color= 'blue') 
+        fig, axes = plt.subplots(1, 2, sharey= True, figsize= (12,7))
+        sns.histplot(coef_df['constante'], color= 'blue', ax=axes[0])
+        sns.histplot(coef_df['x1'], color= 'red', ax=axes[1])
+
+         
         
         return cuantiles
 
@@ -114,7 +123,8 @@ auto = pd.read_csv('auto.csv')
 ax = auto['weight'].tolist()
 ay = auto['price'].tolist()
 
-ejemploautos = bootstrap_data(ax,ay, 10000, False)
+
+ejemploautos = bootstrap_data(ax,ay, 10000, None)
 ejemploautos.bootstrap()
 
 #%%
@@ -122,8 +132,11 @@ ejemploautos.bootstrap()
 auto = pd.read_csv('auto.csv')
 ax = auto['weight'].tolist()
 ay = auto['price'].tolist()
+ac = list
+al = [1] * len(ax)
 
-ejemploautos = bootstrap_data(ax,ay, 10000, True)
+
+ejemploautos = bootstrap_data(ax,ay, 100, al)
 ejemploautos.bootstrap()
 # %%
 # Me gustaría poder darle un valor por defecto a 'constante', para que no sea necesario ponerlo

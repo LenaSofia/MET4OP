@@ -44,13 +44,12 @@ import matplotlib.pyplot as plt
 #%%
 
 class bootstrap_data:
-    def __init__(self, x, y, k, constante):
+    def __init__(self, x, y, k):
         self.x = x
         self.y = y
         self.k = k
         self.d = pd.DataFrame(list(zip(self.x, self.y)), columns =['x', 'y'])
         self.i = list(range(len(self.d)))
-        self.constante = constante
         """
          - Al llamar la clase, poner como argumentos dos listas
          - 'K' es la cantidad de repeticiones 
@@ -73,30 +72,26 @@ class bootstrap_data:
             # que coinciden con "Ik"
             dk = self.d.iloc[Ik]
             
-            if self.constante == None:
-                # Covierte las columnas X e Y en listas, para poder agregarles la constane 
-                # y usarlas en statsmodels
-                yk = dk['y'].tolist()
-                xk = dk['x'].tolist()
+        
+            # Covierte las columnas X e Y en listas, para poder agregarles la constane 
+            # y usarlas en statsmodels
+            yk = dk['y'].tolist()
+            xk = dk['x'].tolist()
 
-                # Agrega la constante para calcular regresión
-                xk = sm.add_constant(xk)
+            # Agrega la constante para calcular regresión
+            xk = sm.add_constant(xk)
 
-                # Calcula la regresión
-                reg = sm.OLS(yk,xk).fit()
+            # Calcula la regresión
+            reg = sm.OLS(yk,xk).fit()
 
-                coef = reg.summary()
-                coef_html = coef.tables[1].as_html()
-                summary = pd.read_html(coef_html, header=0, index_col=0)[0]
-                
-                # FInalmente, agrega el valor del coeficiente al DataFrame final
-                coef_df.loc[len(coef_df),'constante'] = summary.iloc[0,0]
-                coef_df.loc[len(coef_df) -1,'x1'] = summary.iloc[-1,0]
-
-
-            elif self.constante != True:
-
-                reg = sm.OLS(dk['y'], dk['x']).fit()
+            #  coef = reg.params
+            coef = reg.summary()
+            coef_html = coef.tables[1].as_html()
+            summary = pd.read_html(coef_html, header=0, index_col=0)[0]
+            
+            # FInalmente, agrega el valor del coeficiente al DataFrame final
+            coef_df.loc[len(coef_df),'constante'] = summary.iloc[0,0]
+            coef_df.loc[len(coef_df) -1,'x1'] = summary.iloc[-1,0]
             
             # Pasa la tabla de resumen a un html solo para poder agarrar el coeficiente
             # y agregarlo al DF vacío
@@ -109,8 +104,6 @@ class bootstrap_data:
         fig, axes = plt.subplots(1, 2, sharey= True, figsize= (12,7))
         sns.histplot(coef_df['constante'], color= 'blue', ax=axes[0])
         sns.histplot(coef_df['x1'], color= 'red', ax=axes[1])
-
-         
         
         return cuantiles
 
@@ -124,7 +117,7 @@ ax = auto['weight'].tolist()
 ay = auto['price'].tolist()
 
 
-ejemploautos = bootstrap_data(ax,ay, 10000, None)
+ejemploautos = bootstrap_data(ax,ay, 10000)
 ejemploautos.bootstrap()
 
 #%%
@@ -132,10 +125,8 @@ ejemploautos.bootstrap()
 auto = pd.read_csv('auto.csv')
 ax = auto['weight'].tolist()
 ay = auto['price'].tolist()
-ac = list
 al = [1] * len(ax)
-
-
+al
 ejemploautos = bootstrap_data(ax,ay, 100, al)
 ejemploautos.bootstrap()
 # %%

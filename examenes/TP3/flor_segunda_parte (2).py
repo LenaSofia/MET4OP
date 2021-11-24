@@ -102,12 +102,12 @@ ii) Calcular para cada y^pred dado x_new los cuantiles 0.025,0.25,0.5,0.75,0.972
 iii) Histograma de cada y^pred que me interese
 """
 
-def y_predicho(X=3, repeticiones):
+def y_predicho (DF, repeticiones, X=3):
   
   DF_y_pred = pd.DataFrame()
   
   for i in range(0, repeticiones):
-  y_pred = (DF_coeficientes["const"] + DF_coeficientes["x"] * "X")
+    DF_coeficientes["x"] = "X" *  DF_coeficientes["x"]
 
 def sacar_cuantiles(DF_y_pred):
 

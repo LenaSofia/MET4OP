@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="434bcedd-aeeb-48f2-9a41-bcc26e5b107d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/examenes/TP3/bootstrap_intento_lena.py" beforeDir="false" afterPath="$PROJECT_DIR$/examenes/TP3/bootstrap_intento_lena.py" afterDir="false" />
     </list>
@@ -101,6 +102,9 @@
       <module name="MET4OP" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/examenes/TP3" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -159,7 +163,8 @@
       <workItem from="1637710413593" duration="19000" />
       <workItem from="1637710462368" duration="12439000" />
       <workItem from="1637787934670" duration="2484000" />
-      <workItem from="1637790586588" duration="86000" />
+      <workItem from="1637790586588" duration="128000" />
+      <workItem from="1637790752854" duration="2009000" />
     </task>
     <servers />
   </component>

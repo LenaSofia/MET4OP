@@ -123,7 +123,7 @@ graficos_2 = hacer_graficos(DF_coeficientes_2)'''
 
 #Prueba 3:
 
-auto = pd.read_csv('auto.csv')
+auto = pd.read_csv('D:/UBA/4to Cuarto año/Segundo cuatrimestre/Metodología de análisis en opinión pública/Github/MET4OP/examenes/TP3/auto.csv')
 x = auto['weight'].tolist()
 y = auto['price'].tolist()
 
@@ -131,3 +131,30 @@ DF_autos = armar_DF(x, y)
 DF_coeficiente_autos = generar_bootstrap(DF_autos, 1000)
 cuantiles_auto = sacar_cuantiles(DF_coeficiente_autos)
 graf_autos = hacer_graficos(DF_coeficiente_autos)
+
+#%%
+
+# Predicción del y a partir de un nuevo x:
+
+def predecir_y_nuevo(x_nuevo, DF_coeficientes):
+
+    DF_y_predichos = DF_coeficientes.copy(deep=True)
+
+    DF_y_predichos = DF_y_predichos.rename(columns={'x': 'coef_x',
+                                       'const': 'coef_const'})
+
+    DF_y_predichos = DF_y_predichos.assign(x_nuevo=x_nuevo, y="")
+
+
+    for fila in range(0, len(DF_y_predichos)):
+        DF_y_predichos.loc[DF_y_predichos.index.get_loc(fila), "y"] = \
+            DF_y_predichos.loc[DF_y_predichos.index.get_loc(fila), "coef_const"] \
+            + (DF_y_predichos.loc[DF_y_predichos.index.get_loc(fila), "coef_x"]
+               * DF_y_predichos.loc[DF_y_predichos.index.get_loc(fila), "x_nuevo"])
+
+    return DF_y_predichos
+
+y_predichos = predecir_y_nuevo(2450, DF_coeficiente_autos)
+
+
+

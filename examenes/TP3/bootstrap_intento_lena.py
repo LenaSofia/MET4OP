@@ -123,7 +123,7 @@ graficos_2 = hacer_graficos(DF_coeficientes_2)'''
 
 #Prueba 3:
 
-auto = pd.read_csv('D:/UBA/4to Cuarto año/Segundo cuatrimestre/Metodología de análisis en opinión pública/Github/MET4OP/examenes/TP3/auto.csv')
+auto = pd.read_csv('Anteriores/auto.csv')
 x = auto['weight'].tolist()
 y = auto['price'].tolist()
 

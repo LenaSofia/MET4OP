@@ -86,18 +86,19 @@ def generar_bootstrap(DF, repeticiones):
 
 #%%
 
-def sacar_cuantiles(*args, nombres_columnas):
+def sacar_cuantiles(nombres_columnas, *args):
 
     cuantiles = pd.DataFrame()
 
     indice = 0
 
     for argumento in args:
-        cuantiles = cuantiles.assign(=argumento)
+        cuantiles[nombres_columnas[indice]] = argumento.quantile([0.025, 0.25, 0.5, 0.75, 0.975])
+        indice += 1
 
-    cuantiles_const = DF_coeficientes[['const']].quantile([0.025, 0.25, 0.5, 0.75, 0.975])
-    cuantiles_x1 = DF_coeficientes[['x']].quantile([0.025, 0.25, 0.5, 0.75, 0.975])
-    cuantiles = pd.merge(cuantiles_const, cuantiles_x1, left_index=True, right_index=True)
+    #cuantiles_const = DF_coeficientes[['const']].quantile([0.025, 0.25, 0.5, 0.75, 0.975])
+    #cuantiles_x1 = DF_coeficientes[['x']].quantile([0.025, 0.25, 0.5, 0.75, 0.975])
+    #cuantiles = pd.merge(cuantiles_const, cuantiles_x1, left_index=True, right_index=True)
     return cuantiles
 
 #%%
@@ -119,14 +120,16 @@ def predecir_y_nuevo(x_nuevo, DF_coeficientes):
     DF_y_predichos = DF_y_predichos.rename(columns={'x': 'coef_x',
                                        'const': 'coef_const'})
 
-    DF_y_predichos = DF_y_predichos.assign(x_nuevo=x_nuevo, y="")
+    DF_y_predichos = DF_y_predichos.assign(x_nuevo=x_nuevo, y_predicho="")
 
 
     for fila in range(0, len(DF_y_predichos)):
-        DF_y_predichos.loc[DF_y_predichos.index.get_loc(fila), "y"] = \
+        DF_y_predichos.loc[DF_y_predichos.index.get_loc(fila), "y_predicho"] = \
             DF_y_predichos.loc[DF_y_predichos.index.get_loc(fila), "coef_const"] \
             + (DF_y_predichos.loc[DF_y_predichos.index.get_loc(fila), "coef_x"]
                * DF_y_predichos.loc[DF_y_predichos.index.get_loc(fila), "x_nuevo"])
+
+    DF_y_predichos["y_predicho"] = DF_y_predichos.y_predicho.astype(float)
 
     return DF_y_predichos
 
@@ -143,11 +146,17 @@ DF_autos = armar_DF(x, y)
 
 DF_coeficiente_autos = generar_bootstrap(DF_autos, 1000)
 
-cuantiles_auto = sacar_cuantiles(DF_coeficiente_autos)
+cuantiles_auto = sacar_cuantiles(["const", "x"], DF_coeficiente_autos[['const']], DF_coeficiente_autos[['x']])
 
-graf_autos = hacer_graficos(DF_coeficiente_autos)
+#graf_autos = hacer_graficos(DF_coeficiente_autos)
 
 y_predichos = predecir_y_nuevo(2450, DF_coeficiente_autos)
+
+#%%
+
+cuantiles_y_predicho = sacar_cuantiles(["y_predicho"], y_predichos[["y_predicho"]])
+
+#%%
 
 
 

@@ -130,3 +130,17 @@ DF_y_predicho = predecir_y_nuevo(5432, DF_coeficientes_variacion)
 analisis_y_predicho = analizar_resultados(DF_y_predicho[['coef_x']], DF_y_predicho[['y_predicho']])
 
 # %%
+#Prueba con archivo de regresion lineal:
+
+prueba_3 = pd.read_csv('Anteriores\prueba_3.csv')
+x = prueba_3['x'].tolist()
+y = prueba_3['y'].tolist()
+
+DF_coeficientes_variacion = encontrar_coeficientes(x, y, 10000)
+
+analisis_coeficientes = analizar_resultados(DF_coeficientes_variacion[['coef_x']], DF_coeficientes_variacion[['coef_const']])
+
+DF_y_predicho = predecir_y_nuevo(2, DF_coeficientes_variacion)
+
+analisis_y_predicho = analizar_resultados(DF_y_predicho[['coef_x']], DF_y_predicho[['y_predicho']])
+# %%

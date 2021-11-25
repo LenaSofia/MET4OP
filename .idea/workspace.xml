@@ -7,7 +7,7 @@
     <list default="true" id="434bcedd-aeeb-48f2-9a41-bcc26e5b107d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examenes/TP3/bootstrap_funcion_combinada.py" beforeDir="false" afterPath="$PROJECT_DIR$/examenes/TP3/bootstrap_funcion_combinada.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/examenes/TP3/bootstrap_funcion_combinada.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,7 +31,7 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
   </component>
-  <component name="RunManager" selected="Python.bootstrap_funcion_combinada">
+  <component name="RunManager" selected="Python.bootstrap_funcion">
     <configuration name="MET4OP" type="PythonConfigurationType" factoryName="Python">
       <module name="MET4OP" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -76,6 +76,25 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="bootstrap_funcion" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="MET4OP" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/examenes/TP3" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/examenes/TP3/bootstrap_funcion.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="bootstrap_funcion_combinada - copia" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="MET4OP" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -102,25 +121,6 @@
       <module name="MET4OP" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/examenes/TP3" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/examenes/TP3/bootstrap_funcion_combinada.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="true" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="bootstrap_intento_lena" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="MET4OP" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
@@ -130,7 +130,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/examenes/TP3/bootstrap_intento_lena.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/examenes/TP3/bootstrap_funcion_combinada.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -185,11 +185,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.bootstrap_funcion" />
         <item itemvalue="Python.bootstrap_funcion_combinada" />
         <item itemvalue="Python.bootstrap_funcion_combinada - copia" />
         <item itemvalue="Python.bootstrap_intento_lena_limpiando" />
         <item itemvalue="Python.bootstrap_intento_ordenado" />
-        <item itemvalue="Python.bootstrap_intento_lena" />
       </list>
     </recent_temporary>
   </component>
@@ -209,7 +209,8 @@
       <workItem from="1637790586588" duration="128000" />
       <workItem from="1637790752854" duration="2009000" />
       <workItem from="1637793319447" duration="17225000" />
-      <workItem from="1637814436212" duration="1654000" />
+      <workItem from="1637814436212" duration="1696000" />
+      <workItem from="1637816196561" duration="367000" />
     </task>
     <servers />
   </component>

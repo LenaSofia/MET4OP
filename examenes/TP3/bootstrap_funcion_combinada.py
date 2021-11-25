@@ -63,21 +63,21 @@ def sacar_cuantiles(*args):
 
 def hacer_graficos(*args):
 
-    if len(args) == 1:
-        sns.histplot(args)
+    #if np.size(args) < 2:
+    #    sns.histplot(args)
 
-    else:
-        indice = 0
-        fig, axes = plt.subplots(1, 2, sharey=True, squeeze=True, figsize=(12, 7))
-        for argumento in args:
-            sns.histplot(argumento, ax=axes[indice])
-            indice += 1
+    #else:
+    indice = 0
+    fig, axes = plt.subplots(1, 2, sharey=True, squeeze=True, figsize=(12, 7))
+    for argumento in args:
+        sns.histplot(argumento, ax=axes[indice])
+        indice += 1
 
     plt.show()
 
 #%%
 
-# Predicción del y a partir de un nuevo x:
+# Predicción del 'y' a partir de un nuevo 'x':
 
 def predecir_y_nuevo(x_nuevo, DF_coeficientes):
 
@@ -99,17 +99,22 @@ def predecir_y_nuevo(x_nuevo, DF_coeficientes):
 
 #%%
 
+# Funciones agrupadas:
+
 def encontrar_coeficientes(x, y, repeticiones):
 
     DataFrame = armar_DF(x, y)
-
     DF_bootstrap_coef = generar_bootstrap(DataFrame, repeticiones)
 
-    cuantiles_DF_bootstrap = sacar_cuantiles(DF_bootstrap_coef[['coef_const']], DF_bootstrap_coef[['coef_x']])
-
-    DF_bootstrap_graf = hacer_graficos(DF_bootstrap_coef[['coef_const']], DF_bootstrap_coef[['coef_x']])
-
     return DF_bootstrap_coef
+
+
+def analizar_resultados(*args):
+
+    cuantiles = sacar_cuantiles(*args)
+    graficos = hacer_graficos(*args)
+
+    return cuantiles
 
 #%%
 
@@ -133,7 +138,7 @@ cuantiles_auto = sacar_cuantiles(DF_coeficiente_autos[['coef_const']], DF_coefic
 
 #%%
 
-graf_autos = hacer_graficos(DF_coeficiente_autos['coef_x'], DF_coeficiente_autos['coef_const'])
+'''graf_autos = hacer_graficos(DF_coeficiente_autos['coef_x'], DF_coeficiente_autos['coef_const'])
 
 #%%
 
@@ -141,4 +146,16 @@ DF_y_predichos = predecir_y_nuevo(2450, DF_coeficiente_autos)
 
 cuantiles_y_predicho = sacar_cuantiles(DF_y_predichos[["y_predicho"]])
 
-graf_y = hacer_graficos(DF_y_predichos['y_predicho'])
+graf_y = hacer_graficos(DF_y_predichos['y_predicho'])'''
+
+#%%
+
+#Prueba reducida:
+
+DF_coeficientes_variacion = encontrar_coeficientes(x, y, 1000)
+
+analisis_coeficientes = analizar_resultados(DF_coeficientes_variacion[['coef_x']], DF_coeficientes_variacion[['coef_const']])
+
+DF_y_predicho = predecir_y_nuevo(5432, DF_coeficientes_variacion)
+
+analisis_y_predicho = analizar_resultados(DF_y_predicho[['coef_x']], DF_y_predicho[['y_predicho']])

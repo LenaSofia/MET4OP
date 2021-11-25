@@ -103,10 +103,18 @@ def sacar_cuantiles(nombres_columnas, *args):
 
 #%%
 
-def hacer_graficos(DF_coeficientes):
-    fig, axes = plt.subplots(1, 2, sharey=True, squeeze=True, figsize=(12, 7))
-    sns.histplot(DF_coeficientes['const'], color='blue', ax=axes[0])
-    sns.histplot(DF_coeficientes['x'], color='red', ax=axes[1])
+def hacer_graficos(*args):
+
+    if len(args) == 1:
+        sns.histplot(args)
+
+    else:
+        indice = 0
+        fig, axes = plt.subplots(1, 2, sharey=True, squeeze=True, figsize=(12, 7))
+        for argumento in args:
+            sns.histplot(argumento, ax=axes[indice])
+            indice += 1
+
     plt.show()
 
 #%%
@@ -148,8 +156,11 @@ DF_coeficiente_autos = generar_bootstrap(DF_autos, 1000)
 
 cuantiles_auto = sacar_cuantiles(["const", "x"], DF_coeficiente_autos[['const']], DF_coeficiente_autos[['x']])
 
-#graf_autos = hacer_graficos(DF_coeficiente_autos)
+#%%
 
+graf_autos = hacer_graficos(DF_coeficiente_autos['x'], DF_coeficiente_autos['const'])
+
+#%%
 y_predichos = predecir_y_nuevo(2450, DF_coeficiente_autos)
 
 #%%
@@ -158,6 +169,6 @@ cuantiles_y_predicho = sacar_cuantiles(["y_predicho"], y_predichos[["y_predicho"
 
 #%%
 
-
+graf_y = hacer_graficos(y_predichos['y_predicho'])
 
 

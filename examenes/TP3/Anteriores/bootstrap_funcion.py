@@ -127,6 +127,7 @@ analisis_coeficientes = analizar_resultados(DF_coeficientes_variacion[['coef_x']
 
 DF_y_predicho = predecir_y_nuevo(5432, DF_coeficientes_variacion)
 
+<<<<<<< HEAD:examenes/TP3/Anteriores/bootstrap_funcion.py
 analisis_y_predicho = analizar_resultados(DF_y_predicho[['coef_x']], DF_y_predicho[['y_predicho']])'''
 
 # %%
@@ -206,3 +207,8 @@ analisis_y_predicho_30 = analizar_resultados(DF_y_predicho_x_30[['coef_x']], DF_
 DF_y_predicho_x_45 = predecir_y_nuevo(45, DF_coeficientes_variacion)
 
 analisis_y_predicho_45 = analizar_resultados(DF_y_predicho_x_45[['coef_x']], DF_y_predicho_x_45[['y_predicho']])
+=======
+analisis_y_predicho = analizar_resultados(DF_y_predicho[['coef_x']], DF_y_predicho[['y_predicho']])
+
+# %%
+>>>>>>> master:examenes/TP3/bootstrap_funcion.py

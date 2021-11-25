@@ -7,7 +7,8 @@
     <list default="true" id="434bcedd-aeeb-48f2-9a41-bcc26e5b107d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examenes/TP3/bootstrap_funcion_combinada.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/examenes/TP3/Anteriores/auto.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/examenes/TP3/bootstrap_funcion.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,6 +81,9 @@
       <module name="MET4OP" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/examenes/TP3" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -210,7 +214,10 @@
       <workItem from="1637790752854" duration="2009000" />
       <workItem from="1637793319447" duration="17225000" />
       <workItem from="1637814436212" duration="1696000" />
-      <workItem from="1637816196561" duration="367000" />
+      <workItem from="1637816196561" duration="504000" />
+      <workItem from="1637858712192" duration="2258000" />
+      <workItem from="1637861220461" duration="6201000" />
+      <workItem from="1637867870776" duration="54000" />
     </task>
     <servers />
   </component>
